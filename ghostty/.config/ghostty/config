@@ -1,0 +1,39 @@
+keybind = alt+shift+v=text:\x16
+keybind = alt+shift+h=text:\x08
+
+command = tmux
+shell-integration = detect
+
+theme = TokyoNight Night
+
+font-family = "MesloLGS NF"
+font-style = Bold
+font-thicken = true
+font-thicken-strength = 0
+font-size = 18.5
+
+background-opacity = 0.7
+background-blur = false
+background-blur-radius = 0
+
+window-theme = auto
+window-decoration = true
+window-padding-x = 0
+window-padding-y = 0
+window-inherit-working-directory = false
+
+macos-titlebar-style = hidden
+macos-icon = glass
+macos-icon-frame = chrome
+macos-icon-ghost-color = #ffffff
+macos-icon-screen-color = #0800ff
+macos-option-as-alt = true
+macos-window-buttons = visible
+
+mouse-hide-while-typing = true
+unfocused-split-opacity = 1
+
+cursor-style-blink = false
+cursor-style = block
+
+split-inherit-working-directory = true
