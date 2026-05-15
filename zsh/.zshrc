@@ -1,5 +1,10 @@
-# Prefer Homebrew binaries
+# Auto-start tmux in Ghostty login shells
 export PATH="/opt/homebrew/bin:$PATH"
+
+if [[ -o interactive ]] && [ -z "$TMUX" ] && [ "$TERM_PROGRAM" = "Ghostty" ]; then
+  echo "Starting tmux from .zshrc" >> "$HOME/.zsh-startup.log"
+  tmux new-session -A -s main
+fi
 
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
