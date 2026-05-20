@@ -3,13 +3,30 @@ require "nvchad.mappings"
 -- add yours here
 
 local map = vim.keymap.set
+local telescope = require "telescope.builtin"
+local dotfiles_root = vim.fn.expand "~/dotfiles"
+
+local function find_files()
+  local cwd = vim.fn.getcwd()
+  local opts = {}
+
+  -- This repo stores real files under dot-paths like .config and .zshrc.
+  if cwd == dotfiles_root or vim.startswith(cwd, dotfiles_root .. "/") then
+    opts.hidden = true
+    opts.find_command = { "fd", "--type", "f", "--hidden", "--exclude", ".git" }
+  end
+
+  telescope.find_files(opts)
+end
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
-map("n", "<C-f>", "<cmd>Telescope find_files<CR>", { desc = "telescope find files" })
+map("n", "<C-f>", find_files, { desc = "telescope find files" })
 map("n", "<C-n>", "<cmd>Neotree toggle left<CR>", { desc = "neo-tree toggle window" })
 map("n", "<leader>e", "<cmd>Neotree focus left<CR>", { desc = "neo-tree focus window" })
-map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "find files" })
+map("n", "<leader>ff", find_files, { desc = "find files" })
+map("n", "<C-z>", "u", { desc = "undo" })
+map("i", "<C-z>", "<C-o>u", { desc = "undo" })
 
 -- cmd + alt + m to render markdown preview
 map("n", "<D-M>", "<cmd>RenderMarkdown<CR>", { desc = "markdown preview" })
@@ -84,4 +101,3 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
-

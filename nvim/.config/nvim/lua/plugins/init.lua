@@ -104,6 +104,38 @@ return {
     lazy = true,
   },
   {
+    "mikavilpas/yazi.nvim",
+    version = "*",
+    event = "VeryLazy",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", lazy = true },
+    },
+    keys = {
+      {
+        "<leader>-",
+        "<cmd>Yazi<cr>",
+        mode = { "n", "v" },
+        desc = "Open yazi at the current file",
+      },
+      {
+        "<leader>cw",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        "<C-Up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    opts = {
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -113,4 +145,28 @@ return {
     ---@type render.md.UserConfig
     opts = {},
   },
+  {
+  "christoomey/vim-tmux-navigator",
+  init = function()
+    vim.g.tmux_navigator_no_mappings = 1
+  end,
+  cmd = {
+    "TmuxNavigateLeft",
+    "TmuxNavigateDown",
+    "TmuxNavigateUp",
+    "TmuxNavigateRight",
+    "TmuxNavigatePrevious",
+    "TmuxNavigatorProcessList",
+  },
+  keys = {
+    { "<M-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+    { "<M-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+    { "<M-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+    { "<M-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+    { "<M-Left>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+    { "<M-Down>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+    { "<M-Up>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+    { "<M-Right>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+  },
+ }
 }
