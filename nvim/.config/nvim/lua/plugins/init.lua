@@ -104,6 +104,10 @@ return {
     lazy = true,
   },
   {
+    "kevinhwang91/promise-async",
+    lazy = true,
+  },
+  {
     "mikavilpas/yazi.nvim",
     version = "*",
     event = "VeryLazy",
@@ -134,6 +138,28 @@ return {
         show_help = "<f1>",
       },
     },
+  },
+  {
+    "kevinhwang91/nvim-ufo",
+    event = "VeryLazy",
+    dependencies = { "kevinhwang91/promise-async" },
+    keys = {
+      {
+        "zR",
+        function()
+          require("ufo").openAllFolds()
+        end,
+        desc = "Open all folds",
+      },
+      {
+        "zM",
+        function()
+          require("ufo").closeAllFolds()
+        end,
+        desc = "Close all folds",
+      },
+    },
+    opts = {},
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
