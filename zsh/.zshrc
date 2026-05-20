@@ -17,6 +17,7 @@ source $ZSH/oh-my-zsh.sh
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ls='eza'
 
 # PATH additions (deduplicated)
 export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/Library/Python/3.9/bin:$HOME/.lmstudio/bin:$PATH"
@@ -35,6 +36,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Kror CLI
 kror() {
   node "$HOME/Desktop/www/kror-cli/dist/index.js" "$@"
+}
+
+y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	command rm -f -- "$tmp"
 }
 
 # tmux dev layout
@@ -92,6 +101,58 @@ alias oc-gpt54mini='opencode --model openai/gpt-5.4-mini'
 
 # fzf init (no process substitution)
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+
+vf() {
+  local file query
+
+  query="$*"
+
+  file="$(fd --type f --hidden --follow -E .git . | fzf --height=60% --layout=reverse --scheme=path --query "$query" --preview 'bat --style=numbers --color=always --line-range=:200 -- {}' --preview-window='right,60%,border-left')" || return
+  nvim -- "$file"
+}
+
+pj() {
+  local dir repo_root query
+  local -a roots existing_roots zoxide_dirs repo_dirs candidates
+  typeset -A seen
+
+  roots=(
+    "$HOME/Desktop"
+    "$HOME/Documents"
+    "$HOME/go"
+    "$HOME/Superapp-Projects"
+    "$HOME/dotfiles"
+  )
+
+  for root in "${roots[@]}"; do
+    [[ -d "$root" ]] && existing_roots+=("$root")
+  done
+
+  (( ${#existing_roots[@]} )) || return 1
+
+  query="$*"
+
+  zoxide_dirs=("${(@f)$(zoxide query -l --all 2>/dev/null)}")
+  repo_dirs=("${(@f)$(fd --hidden --no-ignore --type d --glob '.git' "${existing_roots[@]}" -E node_modules -E .next -E dist -E build -x dirname)}")
+
+  for dir in "${zoxide_dirs[@]}"; do
+    repo_root="$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)" || continue
+    [[ -n "${seen[$repo_root]}" ]] && continue
+    seen[$repo_root]=1
+    candidates+=("$repo_root")
+  done
+
+  for dir in "${repo_dirs[@]}"; do
+    [[ -n "${seen[$dir]}" ]] && continue
+    seen[$dir]=1
+    candidates+=("$dir")
+  done
+
+  (( ${#candidates[@]} )) || return 1
+
+  dir="$(printf '%s\n' "${candidates[@]}" | fzf --height=60% --layout=reverse --scheme=path --query "$query" --preview 'if git -C {} rev-parse --show-toplevel >/dev/null 2>&1; then git -C {} status --short --branch; printf "\n"; fi; eza --all --group-directories-first --color=always -- {}' --preview-window='right,60%,border-left')" || return
+  builtin cd -- "$dir"
+}
 
 # starship / atuin / zoxide / cargo / tv
 eval "$(starship init zsh)"
