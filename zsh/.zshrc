@@ -14,6 +14,7 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
+alias nv='nvim'
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
