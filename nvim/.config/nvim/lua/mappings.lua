@@ -27,6 +27,9 @@ map("n", "<leader>e", "<cmd>Neotree focus left<CR>", { desc = "neo-tree focus wi
 map("n", "<leader>ff", find_files, { desc = "find files" })
 map("n", "<C-z>", "u", { desc = "undo" })
 map("i", "<C-z>", "<C-o>u", { desc = "undo" })
+map("n", "<C-a>", "ggVG", { noremap = true, silent = true })
+map("n", "<C-c>", '"+yy', { noremap = true, silent = true })
+map("v", "<C-c>", '"+y',  { noremap = true, silent = true })
 
 -- cmd + alt + m to render markdown preview
 map("n", "<D-M>", "<cmd>RenderMarkdown<CR>", { desc = "markdown preview" })
