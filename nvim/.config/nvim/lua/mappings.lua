@@ -35,6 +35,10 @@ map("n", "<C-a>", "ggVG", { noremap = true, silent = true })
 map("n", "<C-c>", '"+yy', { noremap = true, silent = true })  -- copy current line
 map("v", "<C-c>", '"+y',  { noremap = true, silent = true })  -- copy selection
 
+-- Delete the current selection with Backspace without clobbering yanks
+map("x", "<BS>", '"_d', { noremap = true, silent = true })
+map("s", "<BS>", '<C-o>"_c', { noremap = true, silent = true })
+
 -- Reload Neovim config: Ctrl+R
 map("n", "<C-r>", function()
   dofile(vim.env.MYVIMRC)
