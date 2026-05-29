@@ -50,27 +50,36 @@ y() {
 # tmux dev layout
 dev() {
   local current_dir="${PWD}"
-  local editor_pane ai_pane terminal_pane
+  local target editor_pane git_pane ai_pane
 
-  tmux kill-session -t dev 2>/dev/null
-  tmux new-session -d -s dev -c "$current_dir"
-  tmux rename-window -t dev:0 dev
+  if [[ -n "$TMUX" ]]; then
+    local session_name
 
-  editor_pane=$(tmux display-message -t dev:0.0 -p '#{pane_id}')
-  tmux split-window -v -p 25 -t "$editor_pane" -c "$current_dir"
+    session_name=$(tmux display-message -p '#S')
+    tmux kill-window -t "${session_name}:dev" 2>/dev/null
+    tmux new-window -d -n dev -c "$current_dir"
+    target="${session_name}:dev"
+  else
+    tmux kill-session -t dev 2>/dev/null
+    tmux new-session -d -s dev -n dev -c "$current_dir"
+    target="dev:dev"
+  fi
 
-  terminal_pane=$(tmux display-message -t dev:0.1 -p '#{pane_id}')
-
-  tmux select-pane -t "$editor_pane"
-  tmux split-window -h -p 30 -t "$editor_pane" -c "$current_dir"
-
-  ai_pane=$(tmux display-message -p '#{pane_id}')
+  editor_pane=$(tmux display-message -t "$target" -p '#{pane_id}')
+  git_pane=$(tmux split-window -h -p 30 -t "$editor_pane" -c "$current_dir" -P -F '#{pane_id}')
+  ai_pane=$(tmux split-window -v -p 50 -t "$git_pane" -c "$current_dir" -P -F '#{pane_id}')
 
   tmux send-keys -t "$editor_pane" "nvim" C-m
-  tmux send-keys -t "$ai_pane" "opencode" C-m
+  tmux send-keys -t "$git_pane" "lazygit" C-m
+  tmux send-keys -t "$ai_pane" "oc" C-m
 
   tmux select-pane -t "$editor_pane"
-  tmux attach-session -t dev
+
+  if [[ -n "$TMUX" ]]; then
+    tmux select-window -t "$target"
+  else
+    tmux attach-session -t dev
+  fi
 }
 
 # tmux pc layout
