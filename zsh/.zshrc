@@ -161,3 +161,6 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 eval "$(tv init zsh)"
+
+# bun completions
+[ -s "/Users/matheusseabra/.bun/_bun" ] && source "/Users/matheusseabra/.bun/_bun"
