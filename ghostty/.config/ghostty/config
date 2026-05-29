@@ -11,8 +11,8 @@ shell-integration = detect
 
 theme = Catppuccin Mocha 
 
-font-family = "FiraCode Nerd Font"
-font-style = SemiBold
+font-family = "JetBrainsMono Nerd Font"
+font-style = Bold
 font-thicken = false
 font-thicken-strength = 255
 font-size = 18.5
