@@ -6,11 +6,11 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Right Shift -> Alt-a when tapped, Right Shift when held",
+                        "description": "Forward Delete -> Alt-a when tapped, Forward Delete when held",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "right_shift",
+                                    "key_code": "delete_forward",
                                     "modifiers": {
                                         "optional": ["any"]
                                     }
@@ -23,7 +23,7 @@
                                 ],
                                 "to_if_held_down": [
                                     {
-                                        "key_code": "right_shift"
+                                        "key_code": "delete_forward"
                                     }
                                 ],
                                 "type": "basic"
