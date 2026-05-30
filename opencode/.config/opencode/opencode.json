@@ -1,0 +1,57 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "paper": {
+      "type": "local",
+      "enabled": true,
+      "command": ["npx", "mcp-remote", "http://127.0.0.1:29979/mcp"]
+    },
+     "open-pencil": {
+      "type": "local",
+      "enabled": true,
+      "command": ["openpencil-mcp"]
+    },
+    "XcodeBuildMCP": {
+      "type": "local",
+      "command": [
+        "xcodebuildmcp",
+        "mcp"
+      ]
+    },
+    "supabase": {
+      "type": "remote",
+      "url": "https://mcp.supabase.com/mcp?project_ref=tuezhyznzxasdixrdjej",
+      "enabled": true
+    },
+    "firecrawl": {
+      "type": "remote",
+      "url": "https://mcp.firecrawl.dev/v2/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer fc-0b69f533a3ab4d30878c3c7b46446e2b"
+      }
+    },
+    "penpot": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://design.penpot.app/mcp/stream?userToken=eyJhbGciOiJBMjU2S1ciLCJlbmMiOiJBMjU2R0NNIn0.neAKxYyGGH9_Mfebmdydtckw16rBLYVYNUaDXOXWa4pvlXnwUKSt5A.5AAwDVb8HVMJgZz_.64kE7AYj9Yyvom1_vrfjsQc0oadPKxY5zcbVDT6Gv1kKlZe7lBMi7khrxpX0R-Bm3t_VBuZEh-16WrkPoiIbbj-JxnAPqizLzImGIXoL7x9jWbjLfVCjphZ79HovpogjVhFY0FngrxTQSNuGCwXyGNMTbJnAwR9Sh_QAMZokSMuAGKVTri_IKx4oQ0SdbC3pxOvy5cZqetHc.gQTaRXBTnHAH7qj-mkKk6A"
+    }
+  },
+  "plugin": [],
+  "permission": {
+    "bash": {
+      "*": "allow",
+      "git *": "allow",
+      "npm *": "allow",
+      "rm *": "deny",
+      "grep *": "allow"
+    },
+    "edit": {
+      "*": "allow"
+    },
+    "external_directory": {
+      "~/.config/**": "allow",
+      "~/Desktop/www/**": "allow"
+    }
+  }
+}
