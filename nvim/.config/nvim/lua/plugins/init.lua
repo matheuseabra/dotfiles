@@ -172,27 +172,23 @@ return {
     opts = {},
   },
   {
-  "christoomey/vim-tmux-navigator",
-  init = function()
-    vim.g.tmux_navigator_no_mappings = 1
-  end,
-  cmd = {
-    "TmuxNavigateLeft",
-    "TmuxNavigateDown",
-    "TmuxNavigateUp",
-    "TmuxNavigateRight",
-    "TmuxNavigatePrevious",
-    "TmuxNavigatorProcessList",
-  },
-  keys = {
-    { "<M-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    { "<M-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-    { "<M-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-    { "<M-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-    { "<M-Left>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-    { "<M-Down>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-    { "<M-Up>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-    { "<M-Right>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-  },
- }
+    "christoomey/vim-tmux-navigator",
+    init = function()
+      vim.g.tmux_navigator_no_mappings = 1
+    end,
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+      "TmuxNavigatorProcessList",
+    },
+    keys = {
+      { "<M-Left>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<M-Down>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<M-Up>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<M-Right>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+    },
+  }
 }
