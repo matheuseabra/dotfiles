@@ -185,10 +185,18 @@ return {
       "TmuxNavigatorProcessList",
     },
     keys = {
-      { "<M-Left>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<M-Down>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<M-Up>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<M-Right>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<M-Left>", "<cmd><C-U>TmuxNavigateLeft<cr>", mode = "n" },
+      { "<M-Down>", "<cmd><C-U>TmuxNavigateDown<cr>", mode = "n" },
+      { "<M-Up>", "<cmd><C-U>TmuxNavigateUp<cr>", mode = "n" },
+      { "<M-Right>", "<cmd><C-U>TmuxNavigateRight<cr>", mode = "n" },
+      { "<M-Left>", "<Esc><cmd><C-U>TmuxNavigateLeft<cr>", mode = "i" },
+      { "<M-Down>", "<Esc><cmd><C-U>TmuxNavigateDown<cr>", mode = "i" },
+      { "<M-Up>", "<Esc><cmd><C-U>TmuxNavigateUp<cr>", mode = "i" },
+      { "<M-Right>", "<Esc><cmd><C-U>TmuxNavigateRight<cr>", mode = "i" },
+      { "<M-Left>", "<C-\\><C-n><cmd><C-U>TmuxNavigateLeft<cr>", mode = "t" },
+      { "<M-Down>", "<C-\\><C-n><cmd><C-U>TmuxNavigateDown<cr>", mode = "t" },
+      { "<M-Up>", "<C-\\><C-n><cmd><C-U>TmuxNavigateUp<cr>", mode = "t" },
+      { "<M-Right>", "<C-\\><C-n><cmd><C-U>TmuxNavigateRight<cr>", mode = "t" },
     },
   }
 }
