@@ -45,8 +45,16 @@ map("n", "<C-r>", function()
   vim.notify("Neovim config reloaded", vim.log.levels.INFO)
 end, { noremap = true, silent = true })
 
--- cmd + alt + m to render markdown preview
-map("n", "<D-M>", "<cmd>RenderMarkdown<CR>", { desc = "markdown preview" })
+local function markdown_preview()
+  if vim.fn.has "nvim-0.12" == 0 then
+    vim.notify("md-render.nvim requires Neovim 0.12+", vim.log.levels.WARN)
+    return
+  end
+
+  vim.cmd "MdRender"
+end
+
+map("n", "<leader>mp", markdown_preview, { desc = "markdown preview" })
 
 -- Save File: Ctrl+S
 map({ "n", "i", "v" }, "<C-s>", function()

@@ -19,6 +19,7 @@ alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='eza'
+alias spotify='spotify_player'
 
 # PATH additions (deduplicated)
 export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/Library/Python/3.9/bin:$HOME/.lmstudio/bin:$PATH"
@@ -174,3 +175,7 @@ eval "$(tv init zsh)"
 
 # bun completions
 [ -s "/Users/matheusseabra/.bun/_bun" ] && source "/Users/matheusseabra/.bun/_bun"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/matheusseabra/.lmstudio/bin"
+# End of LM Studio CLI section

@@ -172,6 +172,14 @@ return {
     opts = {},
   },
   {
+    "delphinus/md-render.nvim",
+    version = "*",
+    cmd = "MdRender",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
+  {
     "christoomey/vim-tmux-navigator",
     init = function()
       vim.g.tmux_navigator_no_mappings = 1

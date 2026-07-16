@@ -38,6 +38,7 @@
     }
   },
   "plugin": [],
+  "formatter": true,
   "permission": {
     "bash": {
       "*": "allow",

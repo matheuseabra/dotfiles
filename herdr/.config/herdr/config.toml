@@ -1,0 +1,21 @@
+onboarding = false
+
+[theme]
+name = "tokyo-night"
+
+[keys]
+prefix = "ctrl+b"
+previous_tab = "alt+shift+left"
+next_tab = "alt+shift+right"
+switch_tab = "alt+1..9"
+focus_pane_left = "alt+left"
+focus_pane_down = "alt+down"
+focus_pane_up = "alt+up"
+focus_pane_right = "alt+right"
+
+[ui]
+agent_panel_scope = "all"
+
+show_agent_labels_on_pane_borders = true
+[ui.toast]
+delivery = "herdr"
