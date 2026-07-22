@@ -3,6 +3,10 @@ onboarding = false
 [theme]
 name = "tokyo-night"
 
+[terminal]
+# New tabs and panes inherit the focused pane's working directory.
+new_cwd = "follow"
+
 [keys]
 prefix = "ctrl+b"
 previous_tab = "alt+shift+left"
