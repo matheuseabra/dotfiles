@@ -23,45 +23,33 @@
                         ]
                     },
                     {
-                        "description": "NuPhy: fn + plus (=+) -> volume up",
+                        "description": "fn + equal (=+) -> volume up",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "identifiers": [{ "is_built_in_keyboard": true }],
-                                        "type": "device_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": {
                                         "mandatory": ["fn"],
-                                        "optional": ["any"]
+                                        "optional": ["caps_lock", "shift"]
                                     }
                                 },
-                                "to": [{ "consumer_key_code": "volume_increment" }],
+                                "to": [{ "key_code": "volume_up" }],
                                 "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "NuPhy: fn + minus (-_) -> volume down",
+                        "description": "fn + hyphen (-_) -> volume down",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "identifiers": [{ "is_built_in_keyboard": true }],
-                                        "type": "device_unless"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": {
                                         "mandatory": ["fn"],
-                                        "optional": ["any"]
+                                        "optional": ["caps_lock", "shift"]
                                     }
                                 },
-                                "to": [{ "consumer_key_code": "volume_decrement" }],
+                                "to": [{ "key_code": "volume_down" }],
                                 "type": "basic"
                             }
                         ]
