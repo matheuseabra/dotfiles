@@ -16,6 +16,28 @@ focus_pane_left = "alt+left"
 focus_pane_down = "alt+down"
 focus_pane_up = "alt+up"
 focus_pane_right = "alt+right"
+split_horizontal = "prefix+h"
+
+# Prefix+Shift+Arrow swaps the focused pane with its neighbor.
+[[keys.command]]
+key = "prefix+shift+left"
+type = "shell"
+command = "herdr pane swap --current --direction left"
+
+[[keys.command]]
+key = "prefix+shift+down"
+type = "shell"
+command = "herdr pane swap --current --direction down"
+
+[[keys.command]]
+key = "prefix+shift+up"
+type = "shell"
+command = "herdr pane swap --current --direction up"
+
+[[keys.command]]
+key = "prefix+shift+right"
+type = "shell"
+command = "herdr pane swap --current --direction right"
 
 [ui]
 show_agent_labels_on_pane_borders = true
