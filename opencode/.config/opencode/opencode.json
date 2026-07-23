@@ -50,17 +50,37 @@
       ],
       "enabled": true
     },
-    "pixellab": {
+    "drawthings": {
       "type": "local",
       "command": [
         "npx",
-        "mcp-remote@latest",
-        "https://api.pixellab.ai/mcp",
-        "--transport",
-        "http-only",
-        "--header",
-        "Authorization:Bearer ec070f6a-db11-487b-88f0-8f7361690928"
-      ]
+        "-y",
+        "mcp-drawthings"
+      ],
+      "enabled": true
+    },
+    "aseprite": {
+      "type": "local",
+      "command": [
+        "/Users/matheusseabra/.local/bin/uv",
+        "--directory",
+        "/Users/matheusseabra/.local/share/aseprite-mcp",
+        "run",
+        "-m",
+        "aseprite_mcp"
+      ],
+      "enabled": true,
+      "env": {
+        "ASEPRITE_PATH": "/Applications/Aseprite.app/Contents/MacOS/aseprite"
+      }
+    },
+    "vercel": {
+      "type": "remote",
+      "url": "https://mcp.vercel.com",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer rnd_NO5IAsZ1EZzlp72EXiZZJEioAu6"
+      }
     }
   },
   "plugin": [],
