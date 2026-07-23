@@ -165,10 +165,8 @@ pj() {
   builtin cd -- "$dir"
 }
 
-# starship / atuin / zoxide / cargo / tv
+# starship / zoxide / cargo / tv
 eval "$(starship init zsh)"
-. "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 eval "$(tv init zsh)"
