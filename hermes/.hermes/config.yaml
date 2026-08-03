@@ -1,0 +1,88 @@
+model:
+  default: minimax/minimax-m2.5:free
+  provider: openrouter
+toolsets:
+  - hermes-cli
+agent:
+  max_turns: 60
+  gateway_timeout: 1800
+  reasoning_effort: high
+  task_completion_guidance: true
+  environment_probe: true
+  terminal:
+    backend: local
+    modal_mode: auto
+    timeout: 180
+    persistent_shell: true
+  web:
+    backend: ""
+    search_backend: ""
+    extract_backend: ""
+  browser:
+    engine: auto
+    inactivity_timeout: 120
+    command_timeout: 30
+    dialog_policy: must_respond
+  checkpoints:
+    enabled: true
+    retention_days: 7
+  compression:
+    enabled: true
+    threshold: 0.5
+    target_ratio: 0.2
+  display:
+    personality: kawaii
+    skin: slate
+    streaming: true
+    inline_diffs: true
+    file_mutation_verifier: true
+  skills:
+    external_dirs:
+      - ~/.agents/skills
+    template_vars: true
+  curator:
+    enabled: true
+    prune_builtins: true
+  approvals:
+    mode: manual
+    cron_mode: deny
+  security:
+    allow_private_urls: false
+    redact_secrets: true
+    tirith_enabled: true
+  code_execution:
+    mode: project
+    timeout: 300
+    max_tool_calls: 50
+  logging:
+    level: INFO
+  lsp:
+    enabled: true
+  platform_toolsets:
+    cli:
+      - browser
+      - clarify
+      - code_execution
+      - computer_use
+      - cronjob
+      - delegation
+      - file
+      - image_gen
+      - kanban
+      - memory
+      - messaging
+      - session_search
+      - skills
+      - spotify
+      - terminal
+      - todo
+      - tts
+      - video
+      - video_gen
+      - vision
+      - web
+      - x_search
+  plugins:
+    enabled:
+      - herdr-agent-state
+      - orca-status

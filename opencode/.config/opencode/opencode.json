@@ -42,23 +42,6 @@
       ],
       "enabled": true
     },
-    "libresprite": {
-      "type": "local",
-      "command": [
-        "uvx",
-        "libresprite-mcp"
-      ],
-      "enabled": true
-    },
-    "drawthings": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "mcp-drawthings"
-      ],
-      "enabled": true
-    },
     "aseprite": {
       "type": "local",
       "command": [
@@ -77,10 +60,7 @@
     "vercel": {
       "type": "remote",
       "url": "https://mcp.vercel.com",
-      "enabled": true,
-      "headers": {
-        "Authorization": "Bearer rnd_NO5IAsZ1EZzlp72EXiZZJEioAu6"
-      }
+      "enabled": true
     }
   },
   "plugin": [],

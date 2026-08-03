@@ -44,7 +44,7 @@
     "session_parent": "up",
 
     "stash_delete": "ctrl+d",
-    "model_provider_list": "ctrl+a",
+    "model_provider_list": "none",
     "model_favorite_toggle": "ctrl+f",
     "model_list": "<leader>m",
     "model_cycle_recent": "f2",
@@ -88,7 +88,7 @@
 
     "input_clear": "ctrl+c",
     "input_paste": {
-      "key": "ctrl+v",
+      "key": "ctrl+v,ctrl+shift+v",
       "preventDefault": false
     },
     "input_submit": "return",
@@ -101,7 +101,7 @@
     "input_select_right": "shift+right",
     "input_select_up": "shift+up",
     "input_select_down": "shift+down",
-    "input_line_home": "ctrl+a",
+    "input_line_home": "none",
     "input_line_end": "ctrl+e",
     "input_select_line_home": "ctrl+shift+a",
     "input_select_line_end": "ctrl+shift+e",
@@ -126,7 +126,7 @@
     "input_select_word_backward": "alt+shift+b,alt+shift+left",
     "input_delete_word_forward": "alt+d,alt+delete,ctrl+delete",
     "input_delete_word_backward": "ctrl+w,ctrl+backspace,alt+backspace",
-    "input_select_all": "super+a",
+    "input_select_all": "ctrl+a",
     "history_previous": "up",
     "history_next": "down",
 

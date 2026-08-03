@@ -15,7 +15,7 @@ font-thicken = false
 font-thicken-strength = 255
 font-size = 18.5
 
-background-opacity = 0.9
+background-opacity = 0.5
 background-blur = true
 background-blur-radius = 20
 

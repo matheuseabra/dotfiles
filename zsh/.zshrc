@@ -20,6 +20,7 @@ alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='eza'
 alias spotify='spotify_player'
+alias s2s='speech-to-speech'
 
 # PATH additions (deduplicated)
 export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/Library/Python/3.9/bin:$HOME/.lmstudio/bin:$PATH"
@@ -183,3 +184,6 @@ export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
 autoload -Uz compinit && compinit -C
 # <<< grok installer <<<
+
+# druk
+export PATH=/Users/matheusseabra/.druk/bin:$PATH

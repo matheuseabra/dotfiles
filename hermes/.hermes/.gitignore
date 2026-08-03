@@ -1,0 +1,7 @@
+# Keep only portable Hermes configuration in this package.
+*
+!.gitignore
+!config.yaml
+!SOUL.md
+!skins/
+!skins/*.yaml
