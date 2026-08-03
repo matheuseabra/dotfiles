@@ -53,11 +53,6 @@ type = "shell"
 command = "herdr plugin action invoke open-file-viewer-tab --plugin herdr-file-viewer"
 
 [[keys.command]]
-key = "prefix+b"
-type = "shell"
-command = "herdr plugin pane open --plugin official.browser --entrypoint browser --placement split --direction right --focus"
-
-[[keys.command]]
 key = "cmd+r"
 type = "plugin_action"
 command = "persiyanov.reviewr.toggle"   # <plugin_id>.<action_id> — note the id, not the name
