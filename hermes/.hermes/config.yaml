@@ -1,6 +1,7 @@
 model:
-  default: minimax/minimax-m2.5:free
-  provider: openrouter
+  default: gpt-5.6-luna
+  provider: openai-codex
+  api_mode: codex_responses
 toolsets:
   - hermes-cli
 agent:
