@@ -86,4 +86,3 @@ agent:
   plugins:
     enabled:
       - herdr-agent-state
-      - orca-status

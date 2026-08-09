@@ -1,6 +1,6 @@
 return {
   options = {
-    theme = "auto",
+    theme = "aether",
     globalstatus = true,
     component_separators = { left = "│", right = "│" },
     section_separators = { left = "", right = "" },

@@ -1,8 +1,8 @@
 {
-  "theme": "tokyo-night",
+  "theme": "spacex-terrafab",
   "themeSync": false,
-  "themeLight": "light",
-  "themeDark": "tokyo-night",
+  "themeLight": "spacex-terrafab",
+  "themeDark": "spacex-terrafab",
   "transparent": false,
   "iconTheme": "nerd",
   "vim": false,
@@ -24,7 +24,9 @@
   "lspAutoInstall": true,
   "typescriptTsdk": "",
   "lspServers": {},
-  "keybindings": {},
+  "keybindings": {
+    "view.sidebar": "Ctrl+Opt+B"
+  },
   "disabledExtensions": [],
   "extensionUpdates": true,
   "extensionRegistry": "https://raw.githubusercontent.com/letstri/druk/main/extensions/"

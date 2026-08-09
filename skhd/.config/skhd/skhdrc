@@ -96,8 +96,8 @@ cmd + shift - g : open -na /Applications/Ghostty.app
 # open Browser
 cmd + shift - b : open -a "Dia"
 
-# open Visual Studio Code
-cmd + shift - c : open -a "Visual Studio Code"
+# open Zed
+cmd + shift - e : open -a "Zed"
 
 # open Spotify
 cmd + shift - s : open -a Spotify

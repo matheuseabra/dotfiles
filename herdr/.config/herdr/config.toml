@@ -1,10 +1,23 @@
 onboarding = false
 
 [theme]
-name = "tokyo-night"
+name = "terminal"
 
+auto_switch = false
 [theme.custom]
 panel_bg = "reset"
+surface0 = "#1f1a2c"
+surface1 = "#38324f"
+accent = "#bad8ff"
+red = "#9c8ba9"
+green = "#a1c4e4"
+yellow = "#c4f6ff"
+blue = "#757b9d"
+text = "#f3f4ff"
+subtext0 = "#a1a4af"
+surface_dim = "#0d0820"
+overlay0 = "#66656b"
+overlay1 = "#a1a4af"
 
 [terminal]
 # New tabs and panes inherit the focused pane's working directory.
@@ -42,10 +55,10 @@ key = "prefix+shift+right"
 type = "shell"
 command = "herdr pane swap --current --direction right"
 
-[[keys.command]]              # open in a split beside your work
+[[keys.command]]              # toggle the Reviewr sidebar beside your work
 key = "prefix+f"
-type = "shell"
-command = "herdr plugin action invoke open-file-viewer --plugin herdr-file-viewer"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
 
 [[keys.command]]              # …or in its own tab
 key = "prefix+shift+f"
@@ -58,7 +71,16 @@ type = "plugin_action"
 command = "persiyanov.reviewr.toggle"   # <plugin_id>.<action_id> — note the id, not the name
 
 [ui]
+accent = "#bad8ff"
+pane_gaps = true
 show_agent_labels_on_pane_borders = true
+
+[ui.sidebar.agents]
+rows = [
+  ["state_icon", "workspace", { token = "tab", fg = "#f3f4ff", bold = true, dim = false }],
+  [{ token = "agent", fg = "#f3f4ff", bold = true, dim = false }],
+]
+
 [ui.toast]
 delivery = "herdr"
 

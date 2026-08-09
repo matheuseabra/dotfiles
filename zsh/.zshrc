@@ -15,6 +15,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Aliases
 alias nv='nvim'
+alias d='druk'
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -49,39 +50,109 @@ y() {
 	command rm -f -- "$tmp"
 }
 
-# tmux dev layout
+# Herdr dev layout: editor on the left, Git above Codex on the right.
 dev() {
-  local current_dir="${PWD}"
-  local target editor_pane git_pane ai_pane
+  local herdr_bin right_split git_pane bottom_split codex_pane
 
-  if [[ -n "$TMUX" ]]; then
-    local session_name
-
-    session_name=$(tmux display-message -p '#S')
-    tmux kill-window -t "${session_name}:dev" 2>/dev/null
-    tmux new-window -d -n dev -c "$current_dir"
-    target="${session_name}:dev"
-  else
-    tmux kill-session -t dev 2>/dev/null
-    tmux new-session -d -s dev -n dev -c "$current_dir"
-    target="dev:dev"
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'dev must be run inside a Herdr pane.'
+    return 1
   fi
 
-  editor_pane=$(tmux display-message -t "$target" -p '#{pane_id}')
-  git_pane=$(tmux split-window -h -p 30 -t "$editor_pane" -c "$current_dir" -P -F '#{pane_id}')
-  ai_pane=$(tmux split-window -v -p 50 -t "$git_pane" -c "$current_dir" -P -F '#{pane_id}')
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
 
-  tmux send-keys -t "$editor_pane" "nvim" C-m
-  tmux send-keys -t "$git_pane" "lazygit" C-m
-  tmux send-keys -t "$ai_pane" "oc" C-m
+  "$herdr_bin" tab rename "$HERDR_TAB_ID" dev || return
 
-  tmux select-pane -t "$editor_pane"
+  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.60 --no-focus)" || return
+  git_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
 
-  if [[ -n "$TMUX" ]]; then
-    tmux select-window -t "$target"
-  else
-    tmux attach-session -t dev
+  bottom_split="$("$herdr_bin" pane split "$git_pane" --direction down --ratio 0.5 --no-focus)" || return
+  codex_pane="$(jq -er '.result.pane.pane_id' <<< "$bottom_split")" || return
+
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec druk'
+  "$herdr_bin" pane run "$git_pane" 'exec lazygit'
+  "$herdr_bin" pane run "$codex_pane" 'exec codex'
+}
+
+# Herdr index layout: four equal panes with system and terminal monitors.
+index() {
+  local herdr_bin right_split top_right bottom_left_split bottom_left bottom_right_split bottom_right
+
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'index must be run inside a Herdr pane.'
+    return 1
   fi
+
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
+
+  "$herdr_bin" tab rename "$HERDR_TAB_ID" index || return
+
+  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.5 --no-focus)" || return
+  top_right="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
+
+  bottom_left_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.5 --no-focus)" || return
+  bottom_left="$(jq -er '.result.pane.pane_id' <<< "$bottom_left_split")" || return
+
+  bottom_right_split="$("$herdr_bin" pane split "$top_right" --direction down --ratio 0.5 --no-focus)" || return
+  bottom_right="$(jq -er '.result.pane.pane_id' <<< "$bottom_right_split")" || return
+
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec fastfetch'
+  "$herdr_bin" pane run "$top_right" 'exec cmatrix'
+  "$herdr_bin" pane run "$bottom_right" 'exec cava'
+}
+
+# Herdr system layout: macmon on the left and btop on the right.
+system() {
+  local herdr_bin right_split right_pane
+
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'system must be run inside a Herdr pane.'
+    return 1
+  fi
+
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
+
+  "$herdr_bin" tab rename "$HERDR_TAB_ID" system || return
+
+  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.35 --no-focus)" || return
+  right_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
+
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec macmon'
+  "$herdr_bin" pane run "$right_pane" 'exec btop'
+}
+
+# Herdr AI layout: OpenCode on top with a small lower pane.
+ai() {
+  local herdr_bin
+
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'ai must be run inside a Herdr pane.'
+    return 1
+  fi
+
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
+
+  "$herdr_bin" tab rename "$HERDR_TAB_ID" ai || return
+
+  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.85 --no-focus || return
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec codex'
+}
+
+# Herdr editor layout: Druk on top with a small lower pane.
+editor() {
+  local herdr_bin
+
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'editor must be run inside a Herdr pane.'
+    return 1
+  fi
+
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
+
+  "$herdr_bin" tab rename "$HERDR_TAB_ID" editor || return
+
+  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.85 --no-focus || return
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec druk .'
 }
 
 # tmux pc layout

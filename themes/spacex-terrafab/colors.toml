@@ -1,0 +1,24 @@
+# SpaceX Terrafab shared palette.
+# Source: https://github.com/AlexZeitler/omarchy-spacex-terrafab-theme
+mode = "dark"
+
+background = "#060114"
+background_panel = "#0d0820"
+background_element = "#1f1a2c"
+background_dark = "#03010a"
+foreground = "#D7DBE9"
+foreground_muted = "#66656b"
+foreground_dark = "#a1a4af"
+
+accent = "#757b9d"
+ice = "#a1c4e4"
+cyan = "#bad8ff"
+violet = "#aaa2ce"
+violet_bright = "#c1b6ee"
+blue_bright = "#aedcff"
+cyan_bright = "#caf0ff"
+ice_bright = "#bcfbff"
+mauve = "#9c8ba9"
+mauve_bright = "#b39fc5"
+orange = "#ab9cb6"
+shadow = "#675e6d"
