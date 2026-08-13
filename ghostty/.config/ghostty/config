@@ -5,7 +5,7 @@ keybind = alt+arrow_up=text:\x1b[1;3A
 keybind = alt+arrow_down=text:\x1b[1;3B
 
 shell-integration = detect
-command = /Users/matheusseabra/.local/bin/herdr
+command = herdr
 
 # SpaceX Terrafab palette. Keep these explicit so Herdr's `terminal` theme
 # and terminal applications all inherit the same ANSI colors.
@@ -30,11 +30,11 @@ palette = 13=#c1b6ee
 palette = 14=#caf0ff
 palette = 15=#f3f4ff
 
-font-family = "JetBrainsMono Nerd Font"
-font-style = Bold
-font-thicken = false
-font-thicken-strength = 255
-font-size = 18.5
+font-family = "FiraCode Nerd Font"
+font-style = Semibold
+font-thicken = true
+font-thicken-strength = 55
+font-size = 17.5
 
 background-opacity = 0.5
 background-blur = false

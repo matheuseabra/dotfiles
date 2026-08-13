@@ -22,6 +22,9 @@ alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='eza'
 alias spotify='spotify_player'
 alias s2s='speech-to-speech'
+alias ff='fastfetch'
+alias cv='cava'
+alias cm='cmatrix'
 
 # PATH additions (deduplicated)
 export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/Library/Python/3.9/bin:$HOME/.lmstudio/bin:$PATH"
@@ -50,9 +53,9 @@ y() {
 	command rm -f -- "$tmp"
 }
 
-# Herdr dev layout: editor on the left, Git above Codex on the right.
+# Herdr dev layout: Pi on the left and Druk on the right.
 dev() {
-  local herdr_bin right_split git_pane bottom_split codex_pane
+  local herdr_bin right_split druk_pane
 
   if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
     print -u2 'dev must be run inside a Herdr pane.'
@@ -63,15 +66,11 @@ dev() {
 
   "$herdr_bin" tab rename "$HERDR_TAB_ID" dev || return
 
-  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.60 --no-focus)" || return
-  git_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
+  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.15 --no-focus)" || return
+  druk_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
 
-  bottom_split="$("$herdr_bin" pane split "$git_pane" --direction down --ratio 0.5 --no-focus)" || return
-  codex_pane="$(jq -er '.result.pane.pane_id' <<< "$bottom_split")" || return
-
-  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec druk'
-  "$herdr_bin" pane run "$git_pane" 'exec lazygit'
-  "$herdr_bin" pane run "$codex_pane" 'exec codex'
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec pi'
+  "$herdr_bin" pane run "$druk_pane" 'exec druk'
 }
 
 # Herdr index layout: four equal panes with system and terminal monitors.
@@ -244,17 +243,11 @@ eval "$(zoxide init zsh)"
 eval "$(tv init zsh)"
 
 # bun completions
-[ -s "/Users/matheusseabra/.bun/_bun" ] && source "/Users/matheusseabra/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/matheusseabra/.lmstudio/bin"
+export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
-# <<< grok installer <<<
-
 # druk
-export PATH=/Users/matheusseabra/.druk/bin:$PATH
+export PATH="$HOME/.druk/bin:$PATH"

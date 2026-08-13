@@ -57,12 +57,9 @@
     "aseprite": {
       "type": "local",
       "command": [
-        "/Users/matheusseabra/.local/bin/uv",
-        "--directory",
-        "/Users/matheusseabra/.local/share/aseprite-mcp",
-        "run",
-        "-m",
-        "aseprite_mcp"
+        "sh",
+        "-lc",
+        "exec uv --directory \"$HOME/.local/share/aseprite-mcp\" run -m aseprite_mcp"
       ],
       "enabled": true,
       "environment": {

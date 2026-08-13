@@ -19,3 +19,8 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
+^/themes/
+^/.config/herdr/plugins/
+^/.config/herdr/plugins.json
+^/.config/herdr/.plugins.lock
+^/.config/herdr/release-notes.json

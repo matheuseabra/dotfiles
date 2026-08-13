@@ -33,8 +33,11 @@ command = "codegraph"
 args = ["serve", "--mcp"]
 
 [mcp_servers.aseprite]
-command = "/Users/matheusseabra/.local/bin/uv"
-args = ["--directory", "/Users/matheusseabra/.local/share/aseprite-mcp", "run", "-m", "aseprite_mcp"]
+command = "sh"
+args = [
+  "-lc",
+  "exec uv --directory \"$HOME/.local/share/aseprite-mcp\" run -m aseprite_mcp",
+]
 
 [mcp_servers.aseprite.env]
 ASEPRITE_PATH = "/Applications/Aseprite.app/Contents/MacOS/aseprite"
@@ -65,7 +68,12 @@ hide_world_writable_warning = true
 hide_full_access_warning = true
 
 [tui]
-status_line = ["model-with-reasoning", "current-dir", "context-remaining", "task-progress"]
+status_line = [
+  "model-with-reasoning",
+  "current-dir",
+  "context-remaining",
+  "task-progress",
+]
 status_line_use_colors = true
 theme = "nord"
 

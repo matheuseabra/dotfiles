@@ -6,16 +6,7 @@ format = """
 [  ](bg:accent fg:bg)\
 $username\  
 $directory\
-[](fg:cyan bg:element)\
-$git_branch\
-$git_status\
-[](fg:element bg:panel)\
-$nodejs\
-$bun\
-$rust\
-$golang\
-$php\
-[ ](fg:panel)\
+[ ](fg:cyan)\
 $character"""
 
 [username]

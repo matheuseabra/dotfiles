@@ -1,2 +1,23 @@
+# macOS metadata
 .DS_Store
 **/.DS_Store
+
+# Secrets and local environment overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Generated application state and local tooling
+.pi/
+**/node_modules/
+**/automatic_backups/
+**/*.log
+zsh/.zshrc.bak.*
+herdr/.config/herdr/plugins/
+herdr/.config/herdr/plugins.json
+herdr/.config/herdr/.plugins.lock
+herdr/.config/herdr/release-notes.json
