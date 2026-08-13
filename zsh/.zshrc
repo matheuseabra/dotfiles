@@ -40,11 +40,6 @@ esac
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# Kror CLI
-kror() {
-  node "$HOME/Desktop/www/kror-cli/dist/index.js" "$@"
-}
-
 y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	command yazi "$@" --cwd-file="$tmp"
