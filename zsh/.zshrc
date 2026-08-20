@@ -17,23 +17,31 @@ source $ZSH/oh-my-zsh.sh
 alias nv='nvim'
 alias d='druk'
 alias reload-zsh="source ~/.zshrc"
-alias edit-zsh="nvim ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='eza'
 alias spotify='spotify_player'
 alias s2s='speech-to-speech'
 alias ff='fastfetch'
 alias cv='cava'
-alias cm='cmatrix'
+alias cm='cmatrix -C blue'
 
-# PATH additions (deduplicated)
-export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$HOME/Library/Python/3.9/bin:$HOME/.lmstudio/bin:$PATH"
+# OpenCode v2
+case ":$PATH:" in
+  *":$HOME/.opencode/bin:"*) ;;
+  *) export PATH="$HOME/.opencode/bin:$PATH" ;;
+esac
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# npm global prefix
+case ":$PATH:" in
+  *":$HOME/.npm-global/bin:"*) ;;
+  *) export PATH="$HOME/.npm-global/bin:$PATH" ;;
 esac
 
 # bun
@@ -91,7 +99,7 @@ index() {
   bottom_right="$(jq -er '.result.pane.pane_id' <<< "$bottom_right_split")" || return
 
   "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec fastfetch'
-  "$herdr_bin" pane run "$top_right" 'exec cmatrix'
+  "$herdr_bin" pane run "$top_right" 'exec cmatrix -C blue'
   "$herdr_bin" pane run "$bottom_right" 'exec cava'
 }
 
@@ -169,12 +177,6 @@ pc() {
   tmux select-pane -t "$stats_pane"
   tmux attach-session -t pc
 }
-
-# opencode shortcuts
-alias oc='opencode'
-alias oc-minmax='opencode --model openrouter/minmax-2.5:free'
-alias oc-gpt54='opencode --model openai/gpt-54'
-alias oc-gpt54mini='opencode --model openai/gpt-5.4-mini'
 
 # fzf init (no process substitution)
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
