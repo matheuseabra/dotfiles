@@ -3,18 +3,17 @@ palette = 'spacex_terrafab'
 
 format = """
 [░▒▓](accent)\
-[  ](bg:accent fg:bg)\
 $username\  
 $directory\
 [ ](fg:cyan)\
 $character"""
 
 [username]
-show_always = true
+show_always = false
 style_user = "fg:bg bg:accent"
 style_root = "fg:bg bg:accent"
 format = '[$user ]($style)'
-disabled = false
+disabled = true
 
 [directory]
 style = "fg:bg bg:cyan"
