@@ -1,6 +1,7 @@
 # macOS metadata
 .DS_Store
 **/.DS_Store
+logs/
 
 # Secrets and local environment overrides
 .env
