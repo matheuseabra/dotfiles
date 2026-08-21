@@ -24,6 +24,7 @@ alias s2s='speech-to-speech'
 alias ff='fastfetch'
 alias cv='cava'
 alias cm='cmatrix -C blue'
+alias oc='opencode2'
 
 # OpenCode v2
 case ":$PATH:" in
@@ -155,6 +156,61 @@ editor() {
 
   "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.85 --no-focus || return
   "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec druk .'
+}
+
+# Herdr home layout: 6-pane dashboard with monitors, clock, and shells.
+home() {
+  local herdr_bin pane_count root bottom rightcol bottomleft rest bottomshell
+
+  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
+    print -u2 'home must be run inside a Herdr pane.'
+    return 1
+  fi
+
+  herdr_bin="${HERDR_BIN_PATH:-herdr}"
+
+  # Refuse to rebuild a tab that already has more than one pane, unless --force.
+  if [[ "${1:-}" != "--force" ]]; then
+    pane_count=$("$herdr_bin" tab list --workspace "$HERDR_WORKSPACE_ID" 2>/dev/null \
+      | jq -r --arg tab "$HERDR_TAB_ID" '.result.tabs[] | select(.tab_id == $tab) | .pane_count // 1')
+    if [[ "${pane_count:-1}" -gt 1 ]]; then
+      print -u2 "home: current tab has $pane_count panes; run 'home --force' to rebuild anyway."
+      return 1
+    fi
+  fi
+
+  root=$("$herdr_bin" pane layout --pane "$HERDR_PANE_ID" 2>/dev/null \
+    | jq -er '.result.layout.panes[0].pane_id') || {
+    print -u2 'home: could not resolve current pane as layout root.'
+    return 1
+  }
+
+  # 1. strip across the top; bottom area is the new pane
+  bottom=$("$herdr_bin" pane split "$root" --direction down --ratio 0.10 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  # 2. split the bottom area: big shell (left) | right column
+  rightcol=$("$herdr_bin" pane split "$bottom" --direction right --ratio 0.755 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  # 3. left column: big shell on top, bottom-left shell below
+  bottomleft=$("$herdr_bin" pane split "$bottom" --direction down --ratio 0.881 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  # 4. right column: clock on top, rest below
+  rest=$("$herdr_bin" pane split "$rightcol" --direction down --ratio 0.262 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  # 5. rest: cava on top, shell below
+  bottomshell=$("$herdr_bin" pane split "$rest" --direction down --ratio 0.452 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  "$herdr_bin" pane run "$root" 'cmatrix -C blue'
+  "$herdr_bin" pane run "$bottom" 'exec opencode2'
+  "$herdr_bin" pane run "$rightcol" 'tty-clock'
+  "$herdr_bin" pane run "$rest" 'cava'
+
+  print "home: layout built (cmatrix, oc, tty-clock, cv) in $HERDR_TAB_ID"
 }
 
 # tmux pc layout
