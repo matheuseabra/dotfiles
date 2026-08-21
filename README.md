@@ -14,7 +14,7 @@ cd ~/dotfiles
 
 Stow refuses conflicts and never overwrites an existing file. Review, move, or back up any conflicting local configuration before rerunning the command. To install one package only, run `stow --target "$HOME" <package>` (for example, `stow --target "$HOME" zsh`).
 
-The tracked packages are: `codex`, `druk`, `ghostty`, `herdr`, `hermes`, `karabiner`, `nvim`, `opencode`, `skhd`, `starship`, `television`, `tmux`, and `zsh`. The SpaceX Terrafab palette reference is in `docs/theme/`.
+The tracked packages are: `druk`, `ghostty`, `herdr`, `karabiner`, `nvim`, `skhd`, `starship`, `television`, `tmux`, and `zsh`. The SpaceX Terrafab palette reference is in `docs/theme/`.
 
 ## Optional Herdr plugins
 

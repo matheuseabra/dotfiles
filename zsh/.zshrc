@@ -304,3 +304,7 @@ export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # druk
 export PATH="$HOME/.druk/bin:$PATH"
+
+# Go
+export GOPATH="$HOME/.go"
+export PATH="$GOPATH/bin:$PATH"

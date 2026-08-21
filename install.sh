@@ -3,7 +3,7 @@
 set -eu
 
 repo_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-packages='codex druk ghostty herdr hermes karabiner nvim opencode skhd starship television tmux zsh'
+packages='druk ghostty herdr karabiner nvim skhd starship television tmux zsh'
 
 if ! command -v stow >/dev/null 2>&1; then
 	printf '%s\n' 'GNU Stow is required. Install it first (for example: brew install stow).' >&2
