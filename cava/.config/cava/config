@@ -1,0 +1,6 @@
+[input]
+method = portaudio
+source = "BlackHole 2ch"
+
+[color]
+theme = 'spacex-terrafab'

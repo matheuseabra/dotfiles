@@ -1,0 +1,4 @@
+[mgr]
+prepend_keymap = [
+  { on = "<C-z>", run = "suspend", desc = "Suspend Yazi" },
+]

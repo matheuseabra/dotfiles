@@ -1,0 +1,24 @@
+{
+  "theme": {
+    "name": "lucent-tokyonight",
+    "mode": "dark"
+  },
+  "animations": true,
+  "session": {
+    "scrollbar": false,
+    "markdown": "rendered",
+    "sidebar": "auto",
+    "grouping": "auto"
+  },
+  "tabs": {
+    "layout": "vertical",
+    "enabled": false
+  },
+  "diffs": { "view": "auto" },
+  "prompt": { "image_preview": true },
+  "attention": {
+    "enabled": false,
+    "notifications": false
+  },
+  "debug": { "devtools": false }
+}

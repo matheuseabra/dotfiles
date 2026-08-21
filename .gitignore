@@ -15,7 +15,8 @@ logs/
 # Generated application state and local tooling
 .pi/
 **/node_modules/
-**/*.js
+!opencode/
+!opencode/**/*.js
 **/automatic_backups/
 **/*.log
 zsh/.zshrc.bak.*

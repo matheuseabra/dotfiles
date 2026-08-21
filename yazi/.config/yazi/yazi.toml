@@ -1,0 +1,16 @@
+[opener]
+edit = [
+  { run = "zsh -ic 'druk \"$@\"' zsh %s", block = true, desc = "Druk", for = "unix" },
+]
+code = [
+  { run = "code %s", orphan = true, desc = "VS Code", for = "unix" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "text/*", use = [ "edit", "code" ] },
+  { url = "*.json", use = [ "edit", "code" ] },
+  { url = "*.toml", use = [ "edit", "code" ] },
+  { url = "*.yaml", use = [ "edit", "code" ] },
+  { url = "*.yml", use = [ "edit", "code" ] },
+]
