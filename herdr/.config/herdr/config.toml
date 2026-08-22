@@ -131,3 +131,25 @@ switch_ascii_input_source_in_prefix = false
 # surface_dim = "#050402"
 # overlay0 = "#6a6257"
 # overlay1 = "#a49c8d"
+
+# Venice From Above (mattbbia/venice-from-above) — light theme, upstream
+# name "Aether". Staged, not enabled. To switch: replace the [theme] blocks
+# above with these lines, then run `herdr server reload-config`.
+# [theme]
+# name = "venice-from-above"
+#
+# auto_switch = false
+# [theme.custom]
+# panel_bg = "reset"
+# surface0 = "#f5f2e9"
+# surface1 = "#f6f3eb"
+# accent = "#72684b"
+# red = "#706548"
+# green = "#6f6644"
+# yellow = "#6f6645"
+# blue = "#72684b"
+# text = "#492924"
+# subtext0 = "#85837d"
+# surface_dim = "#f6f3eb"
+# overlay0 = "#9e926c"
+# overlay1 = "#85837d"

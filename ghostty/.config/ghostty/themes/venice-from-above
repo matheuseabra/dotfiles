@@ -1,0 +1,27 @@
+# Stills-in-Motion family: Venice From Above (upstream theme name: "Aether")
+# https://github.com/mattbbia/venice-from-above
+# Ported from upstream ghostty.conf; cursor and selection follow colors.toml.
+
+background = #f5f2e9
+foreground = #492924
+cursor-color = #492924
+cursor-text = #f5f2e9
+selection-background = #492924
+selection-foreground = #f5f2e9
+
+palette = 0=#f5f2e9
+palette = 1=#706548
+palette = 2=#6f6644
+palette = 3=#6f6645
+palette = 4=#72684b
+palette = 5=#796e51
+palette = 6=#726947
+palette = 7=#492924
+palette = 8=#85837d
+palette = 9=#948962
+palette = 10=#938a5c
+palette = 11=#938a5e
+palette = 12=#968c65
+palette = 13=#9e926c
+palette = 14=#968d60
+palette = 15=#6e4740
