@@ -1,24 +1,23 @@
 onboarding = false
 
 [theme]
-name = "tokyo-night"
+name = "terminal"
 
 auto_switch = false
 [theme.custom]
 panel_bg = "reset"
-surface0 = "#1f1a2c"
-surface1 = "#38324f"
-accent = "#bad8ff"
-red = "#9c8ba9"
-green = "#a1c4e4"
-yellow = "#c4f6ff"
-blue = "#757b9d"
-text = "#f3f4ff"
-subtext0 = "#a1a4af"
-surface_dim = "#0d0820"
-overlay0 = "#66656b"
-overlay1 = "#a1a4af"
-
+surface0 = "#f5f2e9"
+surface1 = "#f6f3eb"
+accent = "#ffffff"
+red = "#706548"
+green = "#6f6644"
+yellow = "#6f6645"
+blue = "#6e4740"
+text = "#492924"
+subtext0 = "#706548"
+surface_dim = "#85837d"
+overlay0 = "#b0a48d"
+overlay1 = "#85837d"
 [terminal]
 # New tabs and panes inherit the focused pane's working directory.
 new_cwd = "follow"
@@ -71,7 +70,7 @@ type = "plugin_action"
 command = "persiyanov.reviewr.toggle"   # <plugin_id>.<action_id> — note the id, not the name
 
 [ui]
-accent = "#bad8ff"
+accent = "#ffffff"
 pane_gaps = true
 show_agent_labels_on_pane_borders = true
 
@@ -109,12 +108,14 @@ switch_ascii_input_source_in_prefix = false
 # surface_dim = "#191c23"
 # overlay0 = "#4c566a"
 # overlay1 = "#adb5c4"
+#
+# and under [ui]:  accent = "#88c0d0"
 
 # Stills in Motion (mattbbia/stills-in-motion)
 # Staged, not enabled. To switch: replace the [theme] blocks above with these
 # lines, then run `herdr server reload-config`.
 # [theme]
-# name = "stills-in-motion"
+# name = "terminal"
 #
 # auto_switch = false
 # [theme.custom]
@@ -131,25 +132,32 @@ switch_ascii_input_source_in_prefix = false
 # surface_dim = "#050402"
 # overlay0 = "#6a6257"
 # overlay1 = "#a49c8d"
+#
+# and under [ui]:  accent = "#dfddb2"
 
 # Venice From Above (mattbbia/venice-from-above) — light theme, upstream
 # name "Aether". Staged, not enabled. To switch: replace the [theme] blocks
 # above with these lines, then run `herdr server reload-config`.
 # [theme]
-# name = "venice-from-above"
+# name = "terminal"
 #
 # auto_switch = false
 # [theme.custom]
 # panel_bg = "reset"
 # surface0 = "#f5f2e9"
 # surface1 = "#f6f3eb"
-# accent = "#72684b"
+# accent = "#ffffff"
 # red = "#706548"
 # green = "#6f6644"
 # yellow = "#6f6645"
-# blue = "#72684b"
+# blue = "#6e4740"
 # text = "#492924"
-# subtext0 = "#85837d"
-# surface_dim = "#f6f3eb"
-# overlay0 = "#9e926c"
+# subtext0 = "#706548"
+# surface_dim = "#85837d"
+# overlay0 = "#b0a48d"
 # overlay1 = "#85837d"
+#
+# Pane borders: focused = theme.custom.accent, idle = theme.custom.overlay0
+# (herdr src/ui/panes.rs). overlay0 is a derived muted tint of bg toward fg.
+#
+# and under [ui]:  accent = "#ffffff"
