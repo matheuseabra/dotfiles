@@ -11,6 +11,13 @@
         "type": "local",
         "command": ["npx", "-y", "xcodebuildmcp@latest", "mcp"]
       },
+      "grep_app": {
+        "type": "local",
+        "command": [
+          "node",
+          "/Users/matheusseabra/.local/share/mcp/grep_app_mcp/dist/server-stdio.js"
+        ]
+      },
       "firecrawl": {
         "type": "local",
         "command": ["npx", "-y", "firecrawl-mcp"],

@@ -1,6 +1,6 @@
 {
   "theme": {
-    "name": "lucent-tokyonight",
+    "name": "system",
     "mode": "dark"
   },
   "animations": true,
@@ -11,14 +11,20 @@
     "grouping": "auto"
   },
   "tabs": {
-    "layout": "vertical",
+    "layout": "horizontal",
     "enabled": false
   },
-  "diffs": { "view": "auto" },
-  "prompt": { "image_preview": true },
+  "diffs": {
+    "view": "auto"
+  },
+  "prompt": {
+    "image_preview": true
+  },
   "attention": {
     "enabled": false,
     "notifications": false
   },
-  "debug": { "devtools": false }
+  "debug": {
+    "devtools": false
+  }
 }
