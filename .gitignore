@@ -15,8 +15,6 @@ logs/
 # Generated application state and local tooling
 .pi/
 **/node_modules/
-!opencode/
-!opencode/**/*.js
 **/automatic_backups/
 **/*.log
 zsh/.zshrc.bak.*
@@ -24,4 +22,12 @@ herdr/.config/herdr/plugins/
 herdr/.config/herdr/plugins.json
 herdr/.config/herdr/.plugins.lock
 herdr/.config/herdr/release-notes.json
+herdr/.config/herdr/session.json
+herdr/.config/herdr/*.sock
+
+# opencode integration files installed and overwritten by tools
+opencode/.config/opencode/hooks/
+opencode/.config/opencode/plugins/
+opencode/.config/opencode/herdr-tui-session.js
+opencode/.config/opencode/bun.lock
 .commandcode
