@@ -87,3 +87,25 @@ delivery = "herdr"
 [experimental]
 kitty_graphics = true
 switch_ascii_input_source_in_prefix = false
+
+# Nord (Omarchy) — https://github.com/basecamp/omarchy/tree/master/themes/nord
+# Staged, not enabled. To switch: replace the [theme] blocks above with these
+# lines, then run `herdr server reload-config`.
+# [theme]
+# name = "nord"
+#
+# auto_switch = false
+# [theme.custom]
+# panel_bg = "reset"
+# surface0 = "#3b4252"
+# surface1 = "#434c5e"
+# accent = "#88c0d0"
+# red = "#bf616a"
+# green = "#a3be8c"
+# yellow = "#ebcb8b"
+# blue = "#81a1c1"
+# text = "#d8dee9"
+# subtext0 = "#adb5c4"
+# surface_dim = "#191c23"
+# overlay0 = "#4c566a"
+# overlay1 = "#adb5c4"
