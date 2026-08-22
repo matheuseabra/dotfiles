@@ -109,3 +109,25 @@ switch_ascii_input_source_in_prefix = false
 # surface_dim = "#191c23"
 # overlay0 = "#4c566a"
 # overlay1 = "#adb5c4"
+
+# Stills in Motion (mattbbia/stills-in-motion)
+# Staged, not enabled. To switch: replace the [theme] blocks above with these
+# lines, then run `herdr server reload-config`.
+# [theme]
+# name = "stills-in-motion"
+#
+# auto_switch = false
+# [theme.custom]
+# panel_bg = "reset"
+# surface0 = "#23201c"
+# surface1 = "#605e58"
+# accent = "#7e8468"
+# red = "#a2947d"
+# green = "#cbc3a3"
+# yellow = "#fef2cb"
+# blue = "#7e8468"
+# text = "#DBD0BC"
+# subtext0 = "#a49c8d"
+# surface_dim = "#050402"
+# overlay0 = "#6a6257"
+# overlay1 = "#a49c8d"
