@@ -1,6 +1,6 @@
 # dotfiles
 
-My macOS-oriented shell and application configuration, managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a Stow package whose contents mirror the destination under `$HOME`—for example, `zsh/.zshrc` becomes `~/.zshrc` and `nvim/.config/nvim` becomes `~/.config/nvim`.
+My macOS-oriented shell and application configuration, managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a Stow package whose contents mirror the destination under `$HOME`—for example, `zsh/.zshrc` becomes `~/.zshrc` and `ghostty/.config/ghostty` becomes `~/.config/ghostty`.
 
 ## Install
 
@@ -14,7 +14,7 @@ cd ~/dotfiles
 
 Stow refuses conflicts and never overwrites an existing file. Review, move, or back up any conflicting local configuration before rerunning the command. To install one package only, run `stow --target "$HOME" <package>` (for example, `stow --target "$HOME" zsh`).
 
-The tracked packages are: `btop`, `cava`, `druk`, `fastfetch`, `gh`, `git`, `ghostty`, `herdr`, `karabiner`, `nvim`, `opencode`, `skhd`, `starship`, `television`, `tmux`, `yazi`, and `zsh`. The SpaceX Terrafab palette reference is in `docs/theme/`.
+The tracked packages are: `btop`, `cava`, `druk`, `fastfetch`, `gh`, `git`, `ghostty`, `herdr`, `karabiner`, `opencode`, `skhd`, `starship`, `yazi`, and `zsh`. The SpaceX Terrafab palette reference is in `docs/theme/`.
 
 ## Optional Herdr plugins
 

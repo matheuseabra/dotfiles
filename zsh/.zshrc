@@ -1,10 +1,4 @@
-# Auto-start tmux in Ghostty login shells
 export PATH="/opt/homebrew/bin:$PATH"
-
-if [[ -o interactive ]] && [ -z "$TMUX" ] && [ "$TERM_PROGRAM" = "Ghostty" ]; then
-  echo "Starting tmux from .zshrc" >> "$HOME/.zsh-startup.log"
-  tmux new-session -A -s main
-fi
 
 # Oh My Zsh
 export ZSH="$HOME/.oh-my-zsh"
@@ -14,7 +8,6 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
-alias nv='nvim'
 alias d='druk'
 alias reload-zsh="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -213,27 +206,6 @@ home() {
   print "home: layout built (cmatrix, oc, tty-clock, cv) in $HERDR_TAB_ID"
 }
 
-# tmux pc layout
-pc() {
-  local current_dir="${PWD}"
-  local stats_pane btop_pane
-
-  tmux kill-session -t pc 2>/dev/null
-  tmux new-session -d -s pc -c "$current_dir"
-  tmux rename-window -t pc:0 pc
-
-  stats_pane=$(tmux display-message -t pc:0.0 -p '#{pane_id}')
-  tmux split-window -h -p 50 -t "$stats_pane" -c "$current_dir"
-
-  btop_pane=$(tmux display-message -t pc:0.1 -p '#{pane_id}')
-
-  tmux send-keys -t "$stats_pane" "fastfetch" C-m
-  tmux send-keys -t "$btop_pane" "btop" C-m
-
-  tmux select-pane -t "$stats_pane"
-  tmux attach-session -t pc
-}
-
 # fzf init (no process substitution)
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
 
@@ -243,7 +215,7 @@ vf() {
   query="$*"
 
   file="$(fd --type f --hidden --follow -E .git . | fzf --height=60% --layout=reverse --scheme=path --query "$query" --preview 'bat --style=numbers --color=always --line-range=:200 -- {}' --preview-window='right,60%,border-left')" || return
-  nvim -- "$file"
+  druk -- "$file"
 }
 
 pj() {
@@ -289,11 +261,10 @@ pj() {
   builtin cd -- "$dir"
 }
 
-# starship / zoxide / cargo / tv
+# starship / zoxide / cargo
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-eval "$(tv init zsh)"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
