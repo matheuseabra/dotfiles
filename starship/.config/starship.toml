@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'spacex_terrafab'
+palette = 'venice_from_above'
 
 format = """
 [░▒▓](accent)\
@@ -69,3 +69,33 @@ accent = "#757b9d"
 ice = "#a1c4e4"
 cyan = "#bad8ff"
 text = "#d7dbe9"
+
+[palettes.nord]
+bg = "#2e3440"
+panel = "#3b4252"
+element = "#434c5e"
+accent = "#81a1c1"
+ice = "#88c0d0"
+cyan = "#8fbcbb"
+text = "#d8dee9"
+
+[palettes.stills_in_motion]
+bg = "#0a0703"
+panel = "#23201c"
+element = "#605e58"
+accent = "#7e8468"
+ice = "#cbc3a3"
+cyan = "#dfddb2"
+text = "#DBD0BC"
+
+# Light theme: roles invert so every foreground stays dark ink on cream.
+# panel/element are derived tints of bg toward fg (upstream itself derives
+# #f6f3eb the same way); starship needs steps the palette lacks.
+[palettes.venice_from_above]
+bg = "#f5f2e9"
+panel = "#ece8dc"
+element = "#ddd7c6"
+accent = "#6e4740"
+ice = "#706548"
+cyan = "#492924"
+text = "#492924"
