@@ -76,6 +76,7 @@ herdr_accent() {
     nord) printf '#88c0d0' ;;
     stills-in-motion) printf '#dfddb2' ;;
     venice-from-above) printf '#ffffff' ;;
+    monochrome) printf '#ffffff' ;;
     *) printf '' ;;
   esac
 }
@@ -104,6 +105,12 @@ herdr_palette() {
       printf 'red = "#706548"\ngreen = "#6f6644"\nyellow = "#6f6645"\n'
       printf 'blue = "#6e4740"\ntext = "#492924"\nsubtext0 = "#706548"\n'
       printf 'surface_dim = "#85837d"\noverlay0 = "#b0a48d"\noverlay1 = "#85837d"\n'
+      ;;
+    monochrome)
+      printf 'surface0 = "#3c3c3c"\nsurface1 = "#505050"\naccent = "#ffffff"\n'
+      printf 'red = "#d4d4d4"\ngreen = "#d4d4d4"\nyellow = "#d4d4d4"\n'
+      printf 'blue = "#ffffff"\ntext = "#d4d4d4"\nsubtext0 = "#767676"\n'
+      printf 'surface_dim = "#323232"\noverlay0 = "#505050"\noverlay1 = "#767676"\n'
       ;;
     *) return 1 ;;
   esac
@@ -212,6 +219,18 @@ if [ -f "$CFG/cava/themes/$THEME" ]; then
   say "cava: $THEME (restart to apply)"
 else
   skip "no cava theme file for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# starship — activate the matching palette (dash → underscore) when present.
+# Resolve symlinks: BSD sed -i refuses to edit them in place.
+STARSHIP_CFG="$CFG/starship.toml"
+[ -L "$STARSHIP_CFG" ] && STARSHIP_CFG="$(readlink -f "$STARSHIP_CFG")"
+if grep -q "^\\[palettes\\.$(printf '%s' "$THEME" | tr - _)]" "$STARSHIP_CFG" 2>/dev/null; then
+  run "sed -i '' \"s/^palette = .*/palette = '$(printf '%s' "$THEME" | tr - _)'/\" '$STARSHIP_CFG'"
+  say "starship: $(printf '%s' "$THEME" | tr - _) (next prompt)"
+else
+  skip "no starship palette for $THEME"
 fi
 
 say ""

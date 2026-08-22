@@ -10,7 +10,7 @@ command = /Users/matheusseabra/.local/bin/herdr
 # SpaceX Terrafab palette (themes/spacex-terrafab). Keep colors in the theme
 # file so Herdr's `terminal` theme and terminal applications inherit the same
 # ANSI colors. Override with `ghostty +list-themes` if you want to switch.
-theme = venice-from-above
+theme = monochrome
 
 font-family = "FiraCode Nerd Font"
 font-style = Semibold

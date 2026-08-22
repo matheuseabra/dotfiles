@@ -1,5 +1,5 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-palette = 'venice_from_above'
+palette = 'monochrome'
 
 format = """
 [░▒▓](accent)\
@@ -99,3 +99,12 @@ accent = "#6e4740"
 ice = "#706548"
 cyan = "#492924"
 text = "#492924"
+
+[palettes.monochrome]
+bg = "#282828"
+panel = "#323232"
+element = "#3c3c3c"
+accent = "#505050"
+ice = "#888888"
+cyan = "#d4d4d4"
+text = "#d4d4d4"

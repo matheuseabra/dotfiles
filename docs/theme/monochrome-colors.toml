@@ -1,0 +1,38 @@
+# Monochrome (Swarnim114/omarchy-monochrome-theme)
+# https://github.com/Swarnim114/omarchy-monochrome-theme
+# Upstream ships no colors.toml; tokens recovered from alacritty.toml.
+mode = "dark"
+
+accent = "#ffffff"
+cursor = "#d4d4d4"
+
+foreground = "#d4d4d4"
+background = "#282828"
+
+selection_foreground = "#d4d4d4"
+selection_background = "#505050"
+
+bg = "#282828"
+lighter_bg = "#3c3c3c"
+dim_bg = "#323232"
+gray = "#505050"
+bright_gray = "#767676"
+bright_white = "#ffffff"
+
+color0 = "#3c3c3c"
+color1 = "#d4d4d4"
+color2 = "#d4d4d4"
+color3 = "#d4d4d4"
+color4 = "#d4d4d4"
+color5 = "#d4d4d4"
+color6 = "#d4d4d4"
+color7 = "#d4d4d4"
+
+color8 = "#767676"
+color9 = "#ffffff"
+color10 = "#ffffff"
+color11 = "#ffffff"
+color12 = "#ffffff"
+color13 = "#ffffff"
+color14 = "#ffffff"
+color15 = "#ffffff"

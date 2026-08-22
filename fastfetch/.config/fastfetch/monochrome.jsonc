@@ -1,0 +1,28 @@
+// Monochrome (Swarnim114/omarchy-monochrome-theme)
+// Alternative fastfetch palette. Run with: fastfetch --config monochrome.jsonc
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "file-raw",
+        "source": "~/.config/fastfetch/logo.txt",
+        "padding": { "top": 3 }
+    },
+    "display": {
+        "color": {
+            "title": "#ffffff",
+            "keys": "#888888"
+        },
+        "percent": {
+            "type": 9,
+            "color": {
+                "green": "#d4d4d4",
+                "yellow": "#767676",
+                "red": "#505050"
+            }
+        }
+    },
+    "modules": [
+        "title", "separator", "os", "host", "packages", "shell", "wm",
+        "wmtheme", "theme", "font", "terminal", "cpu", "gpu", "memory", "disk"
+    ]
+}
