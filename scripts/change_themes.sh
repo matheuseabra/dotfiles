@@ -1,0 +1,222 @@
+#!/usr/bin/env sh
+# change_themes.sh — switch ghostty, herdr, druk, fastfetch, opencode, btop,
+# and cava to one theme in one shot.
+#
+# Usage:
+#   scripts/change_themes.sh <theme> [--dry-run]
+#
+# The script edits the live configs under $HOME (what the tools read).
+# Theme assets are looked up per tool; a missing asset skips that tool with
+# a warning instead of failing the whole run. Herdr palettes live in the
+# registry at the bottom; to support a new theme add its assets plus an
+# entry there.
+#
+# After switching: ghostty reloads itself, herdr is reloaded here, druk and
+# opencode pick the theme up on next launch, btop and cava need a restart.
+
+set -eu
+
+THEME=""
+DRY_RUN=0
+for arg in "$@"; do
+  case "$arg" in
+    -n|--dry-run) DRY_RUN=1 ;;
+    *) THEME="$arg" ;;
+  esac
+done
+
+if [ -z "$THEME" ]; then
+  printf 'usage: %s <theme> [--dry-run]\n' "$0" >&2
+  exit 1
+fi
+
+CFG="$HOME/.config"
+DOTFILES="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+
+say() { printf '%s\n' "$*"; }
+skip() { printf 'skip: %s\n' "$*" >&2; }
+
+# Run a mutation, or just announce it on --dry-run. A failing step warns and
+# lets the remaining tools still switch.
+run() {
+  if [ "$DRY_RUN" = 1 ]; then
+    printf 'would run: %s\n' "$*"
+  elif sh -c "$*"; then
+    :
+  else
+    printf 'warn: step failed: %s\n' "$*" >&2
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# ghostty — theme = <name> in ~/.config/ghostty/config. Ghostty hot-reloads.
+if [ -f "$CFG/ghostty/themes/$THEME" ]; then
+  run "sed -i '' 's/^theme = .*/theme = $THEME/' '$CFG/ghostty/config'"
+  say "ghostty: theme = $THEME"
+else
+  skip "no ghostty theme file for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# herdr — rewrite the active [theme]/[theme.custom] block from the registry.
+# theme.name must be a herdr builtin (checked by `herdr config check`); ported
+# themes base on "terminal" so herdr builds on the ghostty theme's own colors,
+# except nord, which is itself a builtin.
+herdr_base() {
+  case "$1" in
+    nord) printf 'nord' ;;
+    *) printf 'terminal' ;;
+  esac
+}
+# ui.accent drives herdr's focused pane borders and navigation highlights, so
+# it must track the theme (docs/config-reference: "ui.accent").
+herdr_accent() {
+  case "$1" in
+    spacex-terrafab) printf '#bad8ff' ;;
+    nord) printf '#88c0d0' ;;
+    stills-in-motion) printf '#dfddb2' ;;
+    venice-from-above) printf '#ffffff' ;;
+    *) printf '' ;;
+  esac
+}
+herdr_palette() {
+  case "$1" in
+    spacex-terrafab)
+      printf 'surface0 = "#1f1a2c"\nsurface1 = "#38324f"\naccent = "#bad8ff"\n'
+      printf 'red = "#9c8ba9"\ngreen = "#a1c4e4"\nyellow = "#c4f6ff"\n'
+      printf 'blue = "#757b9d"\ntext = "#f3f4ff"\nsubtext0 = "#a1a4af"\n'
+      printf 'surface_dim = "#0d0820"\noverlay0 = "#66656b"\noverlay1 = "#a1a4af"\n'
+      ;;
+    nord)
+      printf 'surface0 = "#3b4252"\nsurface1 = "#434c5e"\naccent = "#88c0d0"\n'
+      printf 'red = "#bf616a"\ngreen = "#a3be8c"\nyellow = "#ebcb8b"\n'
+      printf 'blue = "#81a1c1"\ntext = "#d8dee9"\nsubtext0 = "#adb5c4"\n'
+      printf 'surface_dim = "#191c23"\noverlay0 = "#4c566a"\noverlay1 = "#adb5c4"\n'
+      ;;
+    stills-in-motion)
+      printf 'surface0 = "#23201c"\nsurface1 = "#605e58"\naccent = "#7e8468"\n'
+      printf 'red = "#a2947d"\ngreen = "#cbc3a3"\nyellow = "#fef2cb"\n'
+      printf 'blue = "#7e8468"\ntext = "#DBD0BC"\nsubtext0 = "#a49c8d"\n'
+      printf 'surface_dim = "#050402"\noverlay0 = "#6a6257"\noverlay1 = "#a49c8d"\n'
+      ;;
+    venice-from-above)
+      printf 'surface0 = "#f5f2e9"\nsurface1 = "#f6f3eb"\naccent = "#ffffff"\n'
+      printf 'red = "#706548"\ngreen = "#6f6644"\nyellow = "#6f6645"\n'
+      printf 'blue = "#6e4740"\ntext = "#492924"\nsubtext0 = "#706548"\n'
+      printf 'surface_dim = "#85837d"\noverlay0 = "#b0a48d"\noverlay1 = "#85837d"\n'
+      ;;
+    *) return 1 ;;
+  esac
+}
+
+HERDR_BLOCK="[theme]
+name = \"$(herdr_base "$THEME")\"
+
+auto_switch = false
+[theme.custom]
+panel_bg = \"reset\"
+$(herdr_palette "$THEME" 2>/dev/null || true)"
+
+if herdr_palette "$THEME" >/dev/null 2>&1 && [ -f "$CFG/herdr/config.toml" ]; then
+  TMP="$(mktemp)"
+  HERDR_BLOCK="$HERDR_BLOCK" awk '
+    /^\[theme\]$/ { in_theme = 1; printf "%s\n", ENVIRON["HERDR_BLOCK"]; next }
+    /^\[terminal\]$/ { in_theme = 0 }
+    in_theme == 0 { print }
+  ' "$CFG/herdr/config.toml" >"$TMP"
+  ACCENT="$(herdr_accent "$THEME")"
+  if [ -n "$ACCENT" ]; then
+    awk -v acc="$ACCENT" '
+      BEGIN { in_ui = 0 }
+      /^\[ui\]$/ { in_ui = 1; print; next }
+      /^\[/ { in_ui = 0; print; next }
+      in_ui && /^accent[[:space:]]*=/ { printf "accent = \"%s\"\n", acc; next }
+      { print }
+    ' "$TMP" >"$TMP.ui" && mv "$TMP.ui" "$TMP"
+  fi
+  if [ "$DRY_RUN" = 1 ]; then
+    say "would run: rewrite [theme] block + ui.accent in $CFG/herdr/config.toml"
+    rm -f "$TMP"
+  else
+    mv "$TMP" "$CFG/herdr/config.toml"
+    herdr server reload-config >/dev/null 2>&1 || true
+    say "herdr: $THEME (config reloaded)"
+  fi
+else
+  skip "no herdr palette registered for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# druk — set theme/themeDark/themeLight when an extension with this id exists.
+if [ -d "$DOTFILES/druk/.config/druk/extensions/$THEME" ] \
+  || [ -d "$CFG/druk/extensions/$THEME" ]; then
+  run "jq '.theme = \$t | .themeDark = \$t | .themeLight = \$t' \
+    --arg t '$THEME' '$CFG/druk/config.json' > '$CFG/druk/config.json.tmp' \
+    && mv '$CFG/druk/config.json.tmp' '$CFG/druk/config.json'"
+  say "druk: $THEME"
+else
+  skip "no druk extension for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# fastfetch — merge display colors from the repo theme jsonc into the live
+# config. Theme files may carry // comment headers, so strip full-line
+# comments before jq (URLs keep their // since it sits mid-line).
+FF_THEME="$DOTFILES/fastfetch/.config/fastfetch/$THEME.jsonc"
+if [ -f "$FF_THEME" ] && [ -f "$CFG/fastfetch/config.jsonc" ]; then
+  if [ "$DRY_RUN" = 1 ]; then
+    say "would run: merge $THEME.jsonc display into $CFG/fastfetch/config.jsonc"
+  else
+    TMP_A="$(mktemp)" && TMP_B="$(mktemp)" && TMP_C="$(mktemp)"
+    sed '/^[[:space:]]*\/\//d' "$CFG/fastfetch/config.jsonc" >"$TMP_A"
+    sed '/^[[:space:]]*\/\//d' "$FF_THEME" >"$TMP_B"
+    if jq -s '.[0].display = .[1].display | .[0]' "$TMP_A" "$TMP_B" >"$TMP_C"; then
+      mv "$TMP_C" "$CFG/fastfetch/config.jsonc"
+      say "fastfetch: $THEME"
+    else
+      rm -f "$TMP_C"
+      printf 'warn: fastfetch merge failed\n' >&2
+    fi
+    rm -f "$TMP_A" "$TMP_B"
+  fi
+else
+  skip "no fastfetch palette for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# opencode — "theme": "<name>" in tui.jsonc. Applies on next TUI launch.
+if [ -f "$CFG/opencode/tui.jsonc" ]; then
+  if [ ! -f "$CFG/opencode/themes/$THEME.json" ]; then
+    say "opencode: '$THEME' is not a local theme — assuming a builtin name."
+  fi
+  run "jq '.theme = \$t' --arg t '$THEME' '$CFG/opencode/tui.jsonc' \
+    > '$CFG/opencode/tui.jsonc.tmp' && mv '$CFG/opencode/tui.jsonc.tmp' '$CFG/opencode/tui.jsonc'"
+  say "opencode: $THEME (next launch)"
+else
+  skip "no opencode tui.jsonc"
+fi
+
+# ---------------------------------------------------------------------------
+# btop — color_theme = "<name>" in btop.conf.
+if [ -f "$CFG/btop/themes/$THEME.theme" ]; then
+  run "sed -i '' 's/^color_theme = .*/color_theme = \"$THEME\"/' '$CFG/btop/btop.conf'"
+  say "btop: $THEME (restart to apply)"
+else
+  skip "no btop theme file for $THEME"
+fi
+
+# ---------------------------------------------------------------------------
+# cava — theme = '<name>' under [color] in the cava config.
+if [ -f "$CFG/cava/themes/$THEME" ]; then
+  run "sed -i '' \"s/^theme = .*/theme = '$THEME'/\" '$CFG/cava/config'"
+  say "cava: $THEME (restart to apply)"
+else
+  skip "no cava theme file for $THEME"
+fi
+
+say ""
+if [ "$DRY_RUN" = 1 ]; then
+  say "dry run complete — no files were changed."
+else
+  say "theme switched to $THEME. restart btop/cava; druk and opencode apply on relaunch."
+fi
