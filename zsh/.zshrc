@@ -11,10 +11,11 @@ source $ZSH/oh-my-zsh.sh
 alias d='druk'
 alias reload-zsh="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ls='eza'
+alias ls='logo-ls'
 alias spotify='spotify_player'
 alias s2s='speech-to-speech'
 alias ff='fastfetch'
+alias mf='minfetch'
 alias cv='cava'
 alias cm='cmatrix -C blue'
 alias oc='opencode2'
