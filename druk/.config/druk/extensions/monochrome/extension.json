@@ -14,11 +14,11 @@
         "statusBg": "#ffffff",
         "statusFg": "#282828",
         "text": "#d4d4d4",
-        "dim": "#767676",
+        "dim": "#888888",
         "faint": "#505050",
         "accent": "#ffffff",
         "activeTabFg": "#ffffff",
-        "inactiveTabFg": "#767676",
+        "inactiveTabFg": "#d4d4d4",
         "treeSelectedBg": "#505050",
         "treeFocusBg": "#505050",
         "dirty": "#ffffff",
@@ -29,9 +29,9 @@
         "gutter": "#505050",
         "currentLine": "#3c3c3c",
         "indentGuide": "#3c3c3c",
-        "gitAdded": "#d4d4d4",
+        "gitAdded": "#b4d094",
         "gitModified": "#ffffff",
-        "gitDeleted": "#767676"
+        "gitDeleted": "#d08484"
       },
       "syntax": {
         "comment": { "fg": "#767676", "italic": true },

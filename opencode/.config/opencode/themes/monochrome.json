@@ -10,55 +10,205 @@
     "white": "#ffffff"
   },
   "theme": {
-    "primary": { "dark": "white", "light": "gray" },
-    "secondary": { "dark": "fg", "light": "fg" },
-    "accent": { "dark": "gray", "light": "gray" },
-    "error": { "dark": "white", "light": "white" },
-    "warning": { "dark": "fg", "light": "fg" },
-    "success": { "dark": "fg", "light": "fg" },
-    "info": { "dark": "white", "light": "gray" },
-    "text": { "dark": "fg", "light": "bg" },
-    "textMuted": { "dark": "gray", "light": "bgLighter" },
-    "background": { "dark": "bg", "light": "white" },
-    "backgroundPanel": { "dark": "bgLighter", "light": "white" },
-    "backgroundElement": { "dark": "bgPanel", "light": "white" },
-    "border": { "dark": "bgLighter", "light": "gray" },
-    "borderActive": { "dark": "graySel", "light": "fg" },
-    "borderSubtle": { "dark": "bgLighter", "light": "gray" },
-    "diffAdded": { "dark": "fg", "light": "fg" },
-    "diffRemoved": { "dark": "gray", "light": "gray" },
-    "diffContext": { "dark": "graySel", "light": "graySel" },
-    "diffHunkHeader": { "dark": "gray", "light": "gray" },
-    "diffHighlightAdded": { "dark": "white", "light": "white" },
-    "diffHighlightRemoved": { "dark": "fg", "light": "fg" },
-    "diffAddedBg": { "dark": "bgLighter", "light": "white" },
-    "diffRemovedBg": { "dark": "bgPanel", "light": "white" },
-    "diffContextBg": { "dark": "bgPanel", "light": "white" },
-    "diffLineNumber": { "dark": "graySel", "light": "gray" },
-    "diffAddedLineNumberBg": { "dark": "bgLighter", "light": "white" },
-    "diffRemovedLineNumberBg": { "dark": "bgLighter", "light": "white" },
-    "markdownText": { "dark": "fg", "light": "bg" },
-    "markdownHeading": { "dark": "white", "light": "white" },
-    "markdownLink": { "dark": "fg", "light": "fg" },
-    "markdownLinkText": { "dark": "white", "light": "white" },
-    "markdownCode": { "dark": "fg", "light": "fg" },
-    "markdownBlockQuote": { "dark": "gray", "light": "gray" },
-    "markdownEmph": { "dark": "fg", "light": "fg" },
-    "markdownStrong": { "dark": "white", "light": "white" },
-    "markdownHorizontalRule": { "dark": "graySel", "light": "graySel" },
-    "markdownListItem": { "dark": "white", "light": "white" },
-    "markdownListEnumeration": { "dark": "fg", "light": "fg" },
-    "markdownImage": { "dark": "fg", "light": "fg" },
-    "markdownImageText": { "dark": "white", "light": "white" },
-    "markdownCodeBlock": { "dark": "fg", "light": "bg" },
-    "syntaxComment": { "dark": "gray", "light": "gray" },
-    "syntaxKeyword": { "dark": "white", "light": "white" },
-    "syntaxFunction": { "dark": "white", "light": "white" },
-    "syntaxVariable": { "dark": "fg", "light": "fg" },
-    "syntaxString": { "dark": "fg", "light": "fg" },
-    "syntaxNumber": { "dark": "gray", "light": "gray" },
-    "syntaxType": { "dark": "white", "light": "white" },
-    "syntaxOperator": { "dark": "fg", "light": "fg" },
-    "syntaxPunctuation": { "dark": "fg", "light": "bg" }
+    "primary": {
+      "dark": "white",
+      "light": "gray"
+    },
+    "secondary": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "accent": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "error": {
+      "dark": "white",
+      "light": "white"
+    },
+    "warning": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "success": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "info": {
+      "dark": "white",
+      "light": "gray"
+    },
+    "text": {
+      "dark": "fg",
+      "light": "bg"
+    },
+    "textMuted": {
+      "dark": "gray",
+      "light": "bgLighter"
+    },
+    "background": {
+      "dark": "none",
+      "light": "white"
+    },
+    "backgroundPanel": {
+      "dark": "none",
+      "light": "white"
+    },
+    "backgroundElement": {
+      "dark": "none",
+      "light": "white"
+    },
+    "border": {
+      "dark": "bgLighter",
+      "light": "gray"
+    },
+    "borderActive": {
+      "dark": "graySel",
+      "light": "fg"
+    },
+    "borderSubtle": {
+      "dark": "bgLighter",
+      "light": "gray"
+    },
+    "diffAdded": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "diffRemoved": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "diffContext": {
+      "dark": "graySel",
+      "light": "graySel"
+    },
+    "diffHunkHeader": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "diffHighlightAdded": {
+      "dark": "white",
+      "light": "white"
+    },
+    "diffHighlightRemoved": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "diffAddedBg": {
+      "dark": "bgLighter",
+      "light": "white"
+    },
+    "diffRemovedBg": {
+      "dark": "bgPanel",
+      "light": "white"
+    },
+    "diffContextBg": {
+      "dark": "bgPanel",
+      "light": "white"
+    },
+    "diffLineNumber": {
+      "dark": "graySel",
+      "light": "gray"
+    },
+    "diffAddedLineNumberBg": {
+      "dark": "bgLighter",
+      "light": "white"
+    },
+    "diffRemovedLineNumberBg": {
+      "dark": "bgLighter",
+      "light": "white"
+    },
+    "markdownText": {
+      "dark": "fg",
+      "light": "bg"
+    },
+    "markdownHeading": {
+      "dark": "white",
+      "light": "white"
+    },
+    "markdownLink": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "markdownLinkText": {
+      "dark": "white",
+      "light": "white"
+    },
+    "markdownCode": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "markdownBlockQuote": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "markdownEmph": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "markdownStrong": {
+      "dark": "white",
+      "light": "white"
+    },
+    "markdownHorizontalRule": {
+      "dark": "graySel",
+      "light": "graySel"
+    },
+    "markdownListItem": {
+      "dark": "white",
+      "light": "white"
+    },
+    "markdownListEnumeration": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "markdownImage": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "markdownImageText": {
+      "dark": "white",
+      "light": "white"
+    },
+    "markdownCodeBlock": {
+      "dark": "fg",
+      "light": "bg"
+    },
+    "syntaxComment": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "syntaxKeyword": {
+      "dark": "white",
+      "light": "white"
+    },
+    "syntaxFunction": {
+      "dark": "white",
+      "light": "white"
+    },
+    "syntaxVariable": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "syntaxString": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "syntaxNumber": {
+      "dark": "gray",
+      "light": "gray"
+    },
+    "syntaxType": {
+      "dark": "white",
+      "light": "white"
+    },
+    "syntaxOperator": {
+      "dark": "fg",
+      "light": "fg"
+    },
+    "syntaxPunctuation": {
+      "dark": "fg",
+      "light": "bg"
+    }
   }
 }
