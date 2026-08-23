@@ -1,0 +1,28 @@
+// SpaceX Terrafab
+// Alternative fastfetch palette. Run with: fastfetch --config spacex-terrafab.jsonc
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": {
+        "type": "file-raw",
+        "source": "~/.config/fastfetch/logo.txt",
+        "padding": { "top": 3 }
+    },
+    "display": {
+        "color": {
+            "title": "#D7DBE9",
+            "keys": "#757b9d"
+        },
+        "percent": {
+            "type": 9,
+            "color": {
+                "green": "#a1c4e4",
+                "yellow": "#c4f6ff",
+                "red": "#9c8ba9"
+            }
+        }
+    },
+    "modules": [
+        "title", "separator", "os", "host", "packages", "shell", "wm",
+        "wmtheme", "theme", "font", "terminal", "cpu", "gpu", "memory", "disk"
+    ]
+}

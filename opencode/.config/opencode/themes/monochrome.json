@@ -19,8 +19,8 @@
       "light": "fg"
     },
     "accent": {
-      "dark": "gray",
-      "light": "gray"
+      "dark": "white",
+      "light": "white"
     },
     "error": {
       "dark": "white",

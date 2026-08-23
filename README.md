@@ -19,7 +19,7 @@ Stows every package without overwriting existing files. Install a single package
 
 ## Themes
 
-Four shared palettes — `spacex-terrafab`, `nord`, `stills-in-motion`, `venice-from-above` — with color references in `docs/theme/` and theme files inside each tool's package.
+Five shared palettes — `spacex-terrafab`, `nord`, `stills-in-motion`, `venice-from-above`, `monochrome` — with color references in `docs/theme/` and theme files inside each tool's package.
 
 Switch every tool at once:
 

@@ -17,7 +17,7 @@
   "theme": {
     "primary": { "dark": "olive", "light": "olive" },
     "secondary": { "dark": "sage", "light": "sage" },
-    "accent": { "dark": "oliveDeep", "light": "oliveDeep" },
+    "accent": { "dark": "olive", "light": "olive" },
     "error": { "dark": "umber", "light": "umber" },
     "warning": { "dark": "khaki", "light": "khaki" },
     "success": { "dark": "moss", "light": "moss" },

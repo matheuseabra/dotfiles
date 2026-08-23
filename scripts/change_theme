@@ -72,10 +72,10 @@ herdr_base() {
 # it must track the theme (docs/config-reference: "ui.accent").
 herdr_accent() {
   case "$1" in
-    spacex-terrafab) printf '#bad8ff' ;;
-    nord) printf '#88c0d0' ;;
-    stills-in-motion) printf '#dfddb2' ;;
-    venice-from-above) printf '#ffffff' ;;
+    spacex-terrafab) printf '#757b9d' ;;
+    nord) printf '#81a1c1' ;;
+    stills-in-motion) printf '#7e8468' ;;
+    venice-from-above) printf '#72684b' ;;
     monochrome) printf '#ffffff' ;;
     *) printf '' ;;
   esac
@@ -83,13 +83,13 @@ herdr_accent() {
 herdr_palette() {
   case "$1" in
     spacex-terrafab)
-      printf 'surface0 = "#1f1a2c"\nsurface1 = "#38324f"\naccent = "#bad8ff"\n'
+      printf 'surface0 = "#1f1a2c"\nsurface1 = "#38324f"\naccent = "#757b9d"\n'
       printf 'red = "#9c8ba9"\ngreen = "#a1c4e4"\nyellow = "#c4f6ff"\n'
       printf 'blue = "#757b9d"\ntext = "#f3f4ff"\nsubtext0 = "#a1a4af"\n'
       printf 'surface_dim = "#0d0820"\noverlay0 = "#66656b"\noverlay1 = "#a1a4af"\n'
       ;;
     nord)
-      printf 'surface0 = "#3b4252"\nsurface1 = "#434c5e"\naccent = "#88c0d0"\n'
+      printf 'surface0 = "#3b4252"\nsurface1 = "#434c5e"\naccent = "#81a1c1"\n'
       printf 'red = "#bf616a"\ngreen = "#a3be8c"\nyellow = "#ebcb8b"\n'
       printf 'blue = "#81a1c1"\ntext = "#d8dee9"\nsubtext0 = "#adb5c4"\n'
       printf 'surface_dim = "#191c23"\noverlay0 = "#4c566a"\noverlay1 = "#adb5c4"\n'
@@ -101,7 +101,7 @@ herdr_palette() {
       printf 'surface_dim = "#050402"\noverlay0 = "#6a6257"\noverlay1 = "#a49c8d"\n'
       ;;
     venice-from-above)
-      printf 'surface0 = "#f5f2e9"\nsurface1 = "#f6f3eb"\naccent = "#ffffff"\n'
+      printf 'surface0 = "#f5f2e9"\nsurface1 = "#f6f3eb"\naccent = "#72684b"\n'
       printf 'red = "#706548"\ngreen = "#6f6644"\nyellow = "#6f6645"\n'
       printf 'blue = "#6e4740"\ntext = "#492924"\nsubtext0 = "#706548"\n'
       printf 'surface_dim = "#85837d"\noverlay0 = "#b0a48d"\noverlay1 = "#85837d"\n'

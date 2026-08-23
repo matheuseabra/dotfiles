@@ -22,7 +22,7 @@
   "theme": {
     "primary": { "dark": "frostCyan", "light": "frostBlue" },
     "secondary": { "dark": "frostBlue", "light": "frostBlue" },
-    "accent": { "dark": "frostBright", "light": "frostBright" },
+    "accent": { "dark": "frostBlue", "light": "frostBlue" },
     "error": { "dark": "red", "light": "red" },
     "warning": { "dark": "orange", "light": "orange" },
     "success": { "dark": "green", "light": "green" },
