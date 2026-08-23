@@ -233,6 +233,23 @@ else
   skip "no starship palette for $THEME"
 fi
 
+# ---------------------------------------------------------------------------
+# macOS wallpaper — wallpapers/<theme>-wallpaper.<ext> in this repo.
+WALLPAPER="$(find "$DOTFILES/wallpapers" -maxdepth 1 -name "$THEME-wallpaper.*" 2>/dev/null | head -1)"
+if [ -n "$WALLPAPER" ]; then
+  if [ "$DRY_RUN" = 1 ]; then
+    say "would run: set macOS wallpaper to $(basename "$WALLPAPER")"
+  else
+    if osascript -e "tell application \"System Events\" to tell every desktop to set picture to \"$WALLPAPER\""; then
+      say "macOS wallpaper: $(basename "$WALLPAPER")"
+    else
+      printf 'warn: wallpaper change failed (approve the Automation prompt if it appeared)\n' >&2
+    fi
+  fi
+else
+  skip "no wallpaper for $THEME"
+fi
+
 say ""
 if [ "$DRY_RUN" = 1 ]; then
   say "dry run complete — no files were changed."
