@@ -19,6 +19,9 @@ alias mf='minfetch'
 alias cv='cava'
 alias cm='cmatrix -C blue'
 alias oc='opencode2'
+alias change_theme="$HOME/dotfiles/scripts/change_theme"
+"!cp"() { print -r -- "commit and push"; }
+"!cpr"() { print -r -- "commit, push and release"; }
 
 # OpenCode v2
 case ":$PATH:" in

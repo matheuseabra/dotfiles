@@ -24,5 +24,7 @@ Four shared palettes — `spacex-terrafab`, `nord`, `stills-in-motion`, `venice-
 Switch every tool at once:
 
 ```sh
-scripts/change_themes.sh <theme>   # add --dry-run to preview
+change_theme <theme>   # add --dry-run to preview
 ```
+
+Available as the `change_theme` alias in zsh; the script itself lives at `scripts/change_theme`.
