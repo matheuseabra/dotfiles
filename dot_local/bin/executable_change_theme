@@ -92,7 +92,7 @@ herdr_accent() {
   case "$1" in
     spacex-terrafab) printf '#757b9d' ;;
     nord) printf '#81a1c1' ;;
-    stills-in-motion) printf '#7e8468' ;;
+    stills-in-motion) printf '#dfddb2' ;;
     venice-from-above) printf '#72684b' ;;
     monochrome) printf '#ffffff' ;;
     *) printf '' ;;
@@ -113,7 +113,7 @@ herdr_palette() {
       printf 'surface_dim = "#191c23"\noverlay0 = "#4c566a"\noverlay1 = "#adb5c4"\n'
       ;;
     stills-in-motion)
-      printf 'surface0 = "#23201c"\nsurface1 = "#605e58"\naccent = "#7e8468"\n'
+      printf 'surface0 = "#23201c"\nsurface1 = "#605e58"\naccent = "#dfddb2"\n'
       printf 'red = "#a2947d"\ngreen = "#cbc3a3"\nyellow = "#fef2cb"\n'
       printf 'blue = "#7e8468"\ntext = "#DBD0BC"\nsubtext0 = "#a49c8d"\n'
       printf 'surface_dim = "#050402"\noverlay0 = "#6a6257"\noverlay1 = "#a49c8d"\n'
@@ -173,9 +173,9 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# druk — set theme/themeDark/themeLight when an extension with this id exists.
+# druk — set the active theme fields and disable appearance sync for a manual switch.
 if [ -d "$CFG/druk/extensions/$THEME" ]; then
-  if run "jq '.theme = \$t | .themeDark = \$t | .themeLight = \$t' \
+  if run "jq '.themeSync = false | .theme = \$t | .themeDark = \$t | .themeLight = \$t' \
     --arg t '$THEME' '$CFG/druk/config.json' > '$CFG/druk/config.json.tmp' \
     && mv '$CFG/druk/config.json.tmp' '$CFG/druk/config.json'"; then
     persist "$CFG/druk/config.json"
@@ -212,24 +212,35 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# opencode — "theme": "<name>" in tui.jsonc. Applies on next TUI launch.
-if [ -f "$CFG/opencode/tui.jsonc" ]; then
+# opencode v2 — theme.name in cli.json. Applies on next CLI launch.
+if [ -f "$CFG/opencode/cli.json" ]; then
   if [ ! -f "$CFG/opencode/themes/$THEME.json" ]; then
     say "opencode: '$THEME' is not a local theme — assuming a builtin name."
   fi
+  if run "jq '.theme.name = \$t' --arg t '$THEME' '$CFG/opencode/cli.json' \
+    > '$CFG/opencode/cli.json.tmp' && mv '$CFG/opencode/cli.json.tmp' '$CFG/opencode/cli.json'"; then
+    persist "$CFG/opencode/cli.json"
+    say "opencode v2: $THEME (next launch)"
+  fi
+else
+  skip "no opencode cli.json"
+fi
+
+# opencode v1 — theme in tui.jsonc. Applies on next TUI launch.
+if [ -f "$CFG/opencode/tui.jsonc" ]; then
   if run "jq '.theme = \$t' --arg t '$THEME' '$CFG/opencode/tui.jsonc' \
     > '$CFG/opencode/tui.jsonc.tmp' && mv '$CFG/opencode/tui.jsonc.tmp' '$CFG/opencode/tui.jsonc'"; then
     persist "$CFG/opencode/tui.jsonc"
-    say "opencode: $THEME (next launch)"
+    say "opencode v1: $THEME (next launch)"
   fi
 else
   skip "no opencode tui.jsonc"
 fi
 
 # ---------------------------------------------------------------------------
-# btop — color_theme = "<name>" in btop.conf.
+# btop — select the theme and keep its background transparent.
 if [ -f "$CFG/btop/themes/$THEME.theme" ]; then
-  if run "sed -i '' 's/^color_theme = .*/color_theme = \"$THEME\"/' '$CFG/btop/btop.conf'"; then
+  if run "sed -i '' -e 's/^color_theme = .*/color_theme = \"$THEME\"/' -e 's/^theme_background = .*/theme_background = false/' '$CFG/btop/btop.conf'"; then
     persist "$CFG/btop/btop.conf"
     say "btop: $THEME (restart to apply)"
   fi

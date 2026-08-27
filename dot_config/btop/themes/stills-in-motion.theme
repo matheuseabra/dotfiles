@@ -1,6 +1,6 @@
 # Stills in Motion (mattbbia/stills-in-motion) btop theme. Ported from upstream btop.theme.
 # Main background, empty for terminal default, need to be empty if you want transparent background
-theme[main_bg]="#0a0703"
+theme[main_bg]=""
 
 # Main text color
 theme[main_fg]="#DBD0BC"
