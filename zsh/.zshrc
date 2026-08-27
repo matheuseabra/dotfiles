@@ -9,6 +9,21 @@ source $ZSH/oh-my-zsh.sh
 
 # Aliases
 alias d='druk'
+
+# Keep normal Pi sessions off the startup update/network checks. Package
+# management commands still run normally so `pi update` and `pi install`
+# remain available.
+pi() {
+  case "${1:-}" in
+    update|install|remove|uninstall)
+      command pi "$@"
+      ;;
+    *)
+      local cache_dir="${PI_NODE_COMPILE_CACHE:-$HOME/.cache/pi/node-compile}"
+      NODE_COMPILE_CACHE="$cache_dir" command pi --offline "$@"
+      ;;
+  esac
+}
 alias reload-zsh="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ls='logo-ls'
