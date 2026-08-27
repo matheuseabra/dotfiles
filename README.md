@@ -1,30 +1,58 @@
 # dotfiles
 
-macOS terminal environment managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory is a Stow package whose contents mirror `$HOME` — `zsh/.zshrc` becomes `~/.zshrc`.
+User-level configuration for macOS and Linux, managed with [chezmoi](https://www.chezmoi.io/). Machine packages, users, SSH, services, and binaries belong in [`vps-environment`](https://github.com/matheuseabra/vps-environment).
 
-## Install
+chezmoi renders this source state into `$HOME`. It selects macOS-only files automatically and renders platform-specific Zsh, Git, and OpenCode configuration.
+
+## Install on macOS
 
 ```sh
-brew install stow
-git clone https://github.com/matheuseabra/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-./install.sh
+brew install chezmoi
+git clone https://github.com/matheuseabra/dotfiles.git ~/.local/share/chezmoi
+chezmoi apply --force
 ```
 
-Stows every package without overwriting existing files. Install a single package with `stow --target "$HOME" <package>`.
+`--force` replaces the legacy GNU Stow symlinks during this one-time migration. Commit or back up local edits first.
 
-## Packages
+For a new machine, the equivalent bootstrap command is:
 
-`btop` `cava` `druk` `fastfetch` `gh` `git` `ghostty` `herdr` `karabiner` `opencode` `skhd` `starship` `yazi` `zsh`
+```sh
+chezmoi init --apply https://github.com/matheuseabra/dotfiles.git
+```
+
+## Use
+
+```sh
+chezmoi diff             # preview rendered changes
+chezmoi apply            # apply source state
+chezmoi edit ~/.zshrc    # edit a source file
+chezmoi update           # pull the source repository and apply it
+```
+
+Run `chezmoi add <path>` to import an intentional local change. Do not edit a generated file without adding it back to the source state.
+
+## Platform ownership
+
+All platforms receive:
+
+- Zsh, Git, Starship, btop, Druk, Yazi, and OpenCode configuration.
+- Shared terminal-theme assets where they are used.
+
+macOS also receives Ghostty, Karabiner, skhd, Herdr, Cava, Fastfetch, GitHub CLI, the theme switcher, and wallpapers. The OpenCode configuration enables the local Xcode and grep.app MCP servers only on macOS.
+
+The Linux VPS receives the portable configuration through Ansible after Ansible installs its packages and binaries. It does not receive macOS desktop configuration.
 
 ## Themes
 
-Five shared palettes — `spacex-terrafab`, `nord`, `stills-in-motion`, `venice-from-above`, `monochrome` — with color references in `docs/theme/` and theme files inside each tool's package.
-
-Switch every tool at once:
+On macOS, switch each supported tool to one palette:
 
 ```sh
-change_theme <theme>   # add --dry-run to preview
+change_theme <theme>
+change_theme <theme> --dry-run
 ```
 
-Available as the `change_theme` alias in zsh; the script itself lives at `scripts/change_theme`.
+Theme assets are installed into their application configuration directories. Wallpapers are installed in `~/.local/share/wallpapers`.
+
+## Secrets
+
+Do not commit credentials, tokens, private keys, or local environment files. OpenCode reads `FIRECRAWL_API_KEY` from the environment. Add encrypted chezmoi files or a password-manager integration only when a configuration file must contain a secret.

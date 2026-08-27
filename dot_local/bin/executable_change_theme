@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
-# change_themes.sh — switch ghostty, herdr, druk, fastfetch, opencode, btop,
+# change_theme — switch ghostty, herdr, druk, fastfetch, opencode, btop,
 # and cava to one theme in one shot.
 #
 # Usage:
-#   scripts/change_themes.sh <theme> [--dry-run]
+#   change_theme <theme> [--dry-run]
 #
 # The script edits the live configs under $HOME (what the tools read).
 # Theme assets are looked up per tool; a missing asset skips that tool with
@@ -31,7 +31,7 @@ if [ -z "$THEME" ]; then
 fi
 
 CFG="$HOME/.config"
-DOTFILES="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+WALLPAPERS="$HOME/.local/share/wallpapers"
 
 say() { printf '%s\n' "$*"; }
 skip() { printf 'skip: %s\n' "$*" >&2; }
@@ -155,8 +155,7 @@ fi
 
 # ---------------------------------------------------------------------------
 # druk — set theme/themeDark/themeLight when an extension with this id exists.
-if [ -d "$DOTFILES/druk/.config/druk/extensions/$THEME" ] \
-  || [ -d "$CFG/druk/extensions/$THEME" ]; then
+if [ -d "$CFG/druk/extensions/$THEME" ]; then
   run "jq '.theme = \$t | .themeDark = \$t | .themeLight = \$t' \
     --arg t '$THEME' '$CFG/druk/config.json' > '$CFG/druk/config.json.tmp' \
     && mv '$CFG/druk/config.json.tmp' '$CFG/druk/config.json'"
@@ -169,7 +168,7 @@ fi
 # fastfetch — merge display colors from the repo theme jsonc into the live
 # config. Theme files may carry // comment headers, so strip full-line
 # comments before jq (URLs keep their // since it sits mid-line).
-FF_THEME="$DOTFILES/fastfetch/.config/fastfetch/$THEME.jsonc"
+FF_THEME="$CFG/fastfetch/$THEME.jsonc"
 if [ -f "$FF_THEME" ] && [ -f "$CFG/fastfetch/config.jsonc" ]; then
   if [ "$DRY_RUN" = 1 ]; then
     say "would run: merge $THEME.jsonc display into $CFG/fastfetch/config.jsonc"
@@ -235,7 +234,7 @@ fi
 
 # ---------------------------------------------------------------------------
 # macOS wallpaper — wallpapers/<theme>-wallpaper.<ext> in this repo.
-WALLPAPER="$(find "$DOTFILES/wallpapers" -maxdepth 1 -name "$THEME-wallpaper.*" 2>/dev/null | head -1)"
+WALLPAPER="$(find "$WALLPAPERS" -maxdepth 1 -name "$THEME-wallpaper.*" 2>/dev/null | head -1)"
 if [ -n "$WALLPAPER" ]; then
   if [ "$DRY_RUN" = 1 ]; then
     say "would run: set macOS wallpaper to $(basename "$WALLPAPER")"
