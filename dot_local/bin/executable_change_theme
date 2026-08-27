@@ -41,18 +41,36 @@ skip() { printf 'skip: %s\n' "$*" >&2; }
 run() {
   if [ "$DRY_RUN" = 1 ]; then
     printf 'would run: %s\n' "$*"
+    return 0
   elif sh -c "$*"; then
-    :
+    return 0
   else
     printf 'warn: step failed: %s\n' "$*" >&2
+    return 1
+  fi
+}
+
+# chezmoi manages copies, not symlinks. Persist a successful live change back
+# into the source state so the next apply or update does not reset the theme.
+persist() {
+  if [ "$DRY_RUN" = 1 ]; then
+    return 0
+  elif command -v chezmoi >/dev/null 2>&1; then
+    if ! chezmoi add "$1"; then
+      printf 'warn: could not persist %s with chezmoi\n' "$1" >&2
+    fi
+  else
+    printf 'warn: chezmoi is required to persist %s\n' "$1" >&2
   fi
 }
 
 # ---------------------------------------------------------------------------
 # ghostty — theme = <name> in ~/.config/ghostty/config. Ghostty hot-reloads.
 if [ -f "$CFG/ghostty/themes/$THEME" ]; then
-  run "sed -i '' 's/^theme = .*/theme = $THEME/' '$CFG/ghostty/config'"
-  say "ghostty: theme = $THEME"
+  if run "sed -i '' 's/^theme = .*/theme = $THEME/' '$CFG/ghostty/config'"; then
+    persist "$CFG/ghostty/config"
+    say "ghostty: theme = $THEME"
+  fi
 else
   skip "no ghostty theme file for $THEME"
 fi
@@ -146,6 +164,7 @@ if herdr_palette "$THEME" >/dev/null 2>&1 && [ -f "$CFG/herdr/config.toml" ]; th
     rm -f "$TMP"
   else
     mv "$TMP" "$CFG/herdr/config.toml"
+    persist "$CFG/herdr/config.toml"
     herdr server reload-config >/dev/null 2>&1 || true
     say "herdr: $THEME (config reloaded)"
   fi
@@ -156,10 +175,12 @@ fi
 # ---------------------------------------------------------------------------
 # druk — set theme/themeDark/themeLight when an extension with this id exists.
 if [ -d "$CFG/druk/extensions/$THEME" ]; then
-  run "jq '.theme = \$t | .themeDark = \$t | .themeLight = \$t' \
+  if run "jq '.theme = \$t | .themeDark = \$t | .themeLight = \$t' \
     --arg t '$THEME' '$CFG/druk/config.json' > '$CFG/druk/config.json.tmp' \
-    && mv '$CFG/druk/config.json.tmp' '$CFG/druk/config.json'"
-  say "druk: $THEME"
+    && mv '$CFG/druk/config.json.tmp' '$CFG/druk/config.json'"; then
+    persist "$CFG/druk/config.json"
+    say "druk: $THEME"
+  fi
 else
   skip "no druk extension for $THEME"
 fi
@@ -178,6 +199,7 @@ if [ -f "$FF_THEME" ] && [ -f "$CFG/fastfetch/config.jsonc" ]; then
     sed '/^[[:space:]]*\/\//d' "$FF_THEME" >"$TMP_B"
     if jq -s '.[0].display = .[1].display | .[0]' "$TMP_A" "$TMP_B" >"$TMP_C"; then
       mv "$TMP_C" "$CFG/fastfetch/config.jsonc"
+      persist "$CFG/fastfetch/config.jsonc"
       say "fastfetch: $THEME"
     else
       rm -f "$TMP_C"
@@ -195,9 +217,11 @@ if [ -f "$CFG/opencode/tui.jsonc" ]; then
   if [ ! -f "$CFG/opencode/themes/$THEME.json" ]; then
     say "opencode: '$THEME' is not a local theme — assuming a builtin name."
   fi
-  run "jq '.theme = \$t' --arg t '$THEME' '$CFG/opencode/tui.jsonc' \
-    > '$CFG/opencode/tui.jsonc.tmp' && mv '$CFG/opencode/tui.jsonc.tmp' '$CFG/opencode/tui.jsonc'"
-  say "opencode: $THEME (next launch)"
+  if run "jq '.theme = \$t' --arg t '$THEME' '$CFG/opencode/tui.jsonc' \
+    > '$CFG/opencode/tui.jsonc.tmp' && mv '$CFG/opencode/tui.jsonc.tmp' '$CFG/opencode/tui.jsonc'"; then
+    persist "$CFG/opencode/tui.jsonc"
+    say "opencode: $THEME (next launch)"
+  fi
 else
   skip "no opencode tui.jsonc"
 fi
@@ -205,8 +229,10 @@ fi
 # ---------------------------------------------------------------------------
 # btop — color_theme = "<name>" in btop.conf.
 if [ -f "$CFG/btop/themes/$THEME.theme" ]; then
-  run "sed -i '' 's/^color_theme = .*/color_theme = \"$THEME\"/' '$CFG/btop/btop.conf'"
-  say "btop: $THEME (restart to apply)"
+  if run "sed -i '' 's/^color_theme = .*/color_theme = \"$THEME\"/' '$CFG/btop/btop.conf'"; then
+    persist "$CFG/btop/btop.conf"
+    say "btop: $THEME (restart to apply)"
+  fi
 else
   skip "no btop theme file for $THEME"
 fi
@@ -214,8 +240,10 @@ fi
 # ---------------------------------------------------------------------------
 # cava — theme = '<name>' under [color] in the cava config.
 if [ -f "$CFG/cava/themes/$THEME" ]; then
-  run "sed -i '' \"s/^theme = .*/theme = '$THEME'/\" '$CFG/cava/config'"
-  say "cava: $THEME (restart to apply)"
+  if run "sed -i '' \"s/^theme = .*/theme = '$THEME'/\" '$CFG/cava/config'"; then
+    persist "$CFG/cava/config"
+    say "cava: $THEME (restart to apply)"
+  fi
 else
   skip "no cava theme file for $THEME"
 fi
@@ -226,8 +254,10 @@ fi
 STARSHIP_CFG="$CFG/starship.toml"
 [ -L "$STARSHIP_CFG" ] && STARSHIP_CFG="$(readlink -f "$STARSHIP_CFG")"
 if grep -q "^\\[palettes\\.$(printf '%s' "$THEME" | tr - _)]" "$STARSHIP_CFG" 2>/dev/null; then
-  run "sed -i '' \"s/^palette = .*/palette = '$(printf '%s' "$THEME" | tr - _)'/\" '$STARSHIP_CFG'"
-  say "starship: $(printf '%s' "$THEME" | tr - _) (next prompt)"
+  if run "sed -i '' \"s/^palette = .*/palette = '$(printf '%s' "$THEME" | tr - _)'/\" '$STARSHIP_CFG'"; then
+    persist "$STARSHIP_CFG"
+    say "starship: $(printf '%s' "$THEME" | tr - _) (next prompt)"
+  fi
 else
   skip "no starship palette for $THEME"
 fi

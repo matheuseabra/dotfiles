@@ -51,7 +51,7 @@ change_theme <theme>
 change_theme <theme> --dry-run
 ```
 
-Theme assets are installed into their application configuration directories. Wallpapers are installed in `~/.local/share/wallpapers`.
+Theme assets are installed into their application configuration directories. Wallpapers are installed in `~/.local/share/wallpapers`. `change_theme` persists each changed configuration file into the chezmoi source state; commit those source changes before running `chezmoi update`.
 
 ## Secrets
 

@@ -12,6 +12,7 @@ docs
 .config/herdr
 .config/karabiner
 .config/skhd
+.config/opencode/tui.jsonc
 .local/bin/change_theme
 .local/share/wallpapers
 {{- end }}
