@@ -7,6 +7,7 @@
         "url": "https://mcp.context7.com/mcp",
         "oauth": false
       },
+{{- if eq .chezmoi.os "darwin" }}
       "xcodebuild": {
         "type": "local",
         "command": ["npx", "-y", "xcodebuildmcp@latest", "mcp"]
@@ -16,8 +17,12 @@
         "command": [
           "node",
           "/Users/matheusseabra/.local/share/mcp/grep_app_mcp/dist/server-stdio.js"
-        ]
+        ],
+        "environment": {
+          "GREP_APP_MCP_LOG_DIR": "/Users/matheusseabra/.local/state/grep-app-mcp/logs"
+        }
       },
+{{- end }}
       "firecrawl": {
         "type": "local",
         "command": ["npx", "-y", "firecrawl-mcp"],
