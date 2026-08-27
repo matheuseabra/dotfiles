@@ -1,0 +1,18 @@
+# Repository documentation and metadata are not home-directory files.
+README.md
+docs
+.gitignore
+
+{{- if ne .chezmoi.os "darwin" }}
+# Desktop applications and macOS automation.
+.config/cava
+.config/fastfetch
+.config/gh
+.config/ghostty
+.config/herdr
+.config/karabiner
+.config/skhd
+.config/opencode/tui.jsonc
+.local/bin/change_theme
+.local/share/wallpapers
+{{- end }}

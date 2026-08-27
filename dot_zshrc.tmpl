@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.os "darwin" }}
 export PATH="/opt/homebrew/bin:$PATH"
 
 # Oh My Zsh
@@ -26,15 +27,15 @@ pi() {
 }
 alias reload-zsh="source ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
+alias matheuseabra-vps="ssh -t contabo 'tmux new-session -A -s dev'"
 alias ls='logo-ls'
 alias spotify='spotify_player'
 alias s2s='speech-to-speech'
 alias ff='fastfetch'
-alias mf='minfetch'
 alias cv='cava'
-alias cm='cmatrix -C blue'
+alias cm='cmatrix'
 alias oc='opencode2'
-alias change_theme="$HOME/dotfiles/scripts/change_theme"
+alias change_theme="$HOME/.local/bin/change_theme"
 "!cp"() { print -r -- "commit and push"; }
 "!cpr"() { print -r -- "commit, push and release"; }
 
@@ -69,7 +70,7 @@ y() {
 	command rm -f -- "$tmp"
 }
 
-# Herdr dev layout: Pi on the left and Druk on the right.
+# Herdr dev layout: Opencode on the left and Druk on the right.
 dev() {
   local herdr_bin right_split druk_pane
 
@@ -82,61 +83,15 @@ dev() {
 
   "$herdr_bin" tab rename "$HERDR_TAB_ID" dev || return
 
-  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.15 --no-focus)" || return
+  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.90 --no-focus || return
+  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.45 --no-focus)" || return
   druk_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
 
-  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec pi'
+  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec opencode2'
   "$herdr_bin" pane run "$druk_pane" 'exec druk'
 }
 
-# Herdr index layout: four equal panes with system and terminal monitors.
-index() {
-  local herdr_bin right_split top_right bottom_left_split bottom_left bottom_right_split bottom_right
-
-  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
-    print -u2 'index must be run inside a Herdr pane.'
-    return 1
-  fi
-
-  herdr_bin="${HERDR_BIN_PATH:-herdr}"
-
-  "$herdr_bin" tab rename "$HERDR_TAB_ID" index || return
-
-  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.5 --no-focus)" || return
-  top_right="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
-
-  bottom_left_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.5 --no-focus)" || return
-  bottom_left="$(jq -er '.result.pane.pane_id' <<< "$bottom_left_split")" || return
-
-  bottom_right_split="$("$herdr_bin" pane split "$top_right" --direction down --ratio 0.5 --no-focus)" || return
-  bottom_right="$(jq -er '.result.pane.pane_id' <<< "$bottom_right_split")" || return
-
-  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec fastfetch'
-  "$herdr_bin" pane run "$top_right" 'exec cmatrix -C blue'
-  "$herdr_bin" pane run "$bottom_right" 'exec cava'
-}
-
-# Herdr system layout: macmon on the left and btop on the right.
-system() {
-  local herdr_bin right_split right_pane
-
-  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
-    print -u2 'system must be run inside a Herdr pane.'
-    return 1
-  fi
-
-  herdr_bin="${HERDR_BIN_PATH:-herdr}"
-
-  "$herdr_bin" tab rename "$HERDR_TAB_ID" system || return
-
-  right_split="$("$herdr_bin" pane split "$HERDR_PANE_ID" --direction right --ratio 0.35 --no-focus)" || return
-  right_pane="$(jq -er '.result.pane.pane_id' <<< "$right_split")" || return
-
-  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec macmon'
-  "$herdr_bin" pane run "$right_pane" 'exec btop'
-}
-
-# Herdr AI layout: OpenCode on top with a small lower pane.
+# Herdr AI layout: Codex on top with a small lower pane.
 ai() {
   local herdr_bin
 
@@ -149,30 +104,13 @@ ai() {
 
   "$herdr_bin" tab rename "$HERDR_TAB_ID" ai || return
 
-  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.85 --no-focus || return
+  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.65 --no-focus || return
   "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec codex'
 }
 
-# Herdr editor layout: Druk on top with a small lower pane.
-editor() {
-  local herdr_bin
-
-  if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
-    print -u2 'editor must be run inside a Herdr pane.'
-    return 1
-  fi
-
-  herdr_bin="${HERDR_BIN_PATH:-herdr}"
-
-  "$herdr_bin" tab rename "$HERDR_TAB_ID" editor || return
-
-  "$herdr_bin" pane split "$HERDR_PANE_ID" --direction down --ratio 0.85 --no-focus || return
-  "$herdr_bin" pane run "$HERDR_PANE_ID" 'exec druk .'
-}
-
-# Herdr home layout: 6-pane dashboard with monitors, clock, and shells.
+# Herdr home layout: 7-pane dashboard with monitors, clock, and shells.
 home() {
-  local herdr_bin pane_count root bottom rightcol bottomleft rest bottomshell
+  local herdr_bin pane_count root bottom rightcol bottomleft rest bottomshell cava_pane
 
   if [[ -z "${HERDR_PANE_ID:-}" || -z "${HERDR_TAB_ID:-}" ]]; then
     print -u2 'home must be run inside a Herdr pane.'
@@ -210,24 +148,30 @@ home() {
     | jq -er '.result.pane.pane_id') || return
 
   # 4. right column: clock on top, rest below
-  rest=$("$herdr_bin" pane split "$rightcol" --direction down --ratio 0.262 --no-focus --cwd "$HOME" \
+  rest=$("$herdr_bin" pane split "$rightcol" --direction down --ratio 0.22 --no-focus --cwd "$HOME" \
     | jq -er '.result.pane.pane_id') || return
 
-  # 5. rest: cava on top, shell below
-  bottomshell=$("$herdr_bin" pane split "$rest" --direction down --ratio 0.452 --no-focus --cwd "$HOME" \
+  # 5. rest: busq on top, mbtop and cava below
+  bottomshell=$("$herdr_bin" pane split "$rest" --direction down --ratio 0.35 --no-focus --cwd "$HOME" \
+    | jq -er '.result.pane.pane_id') || return
+
+  cava_pane=$("$herdr_bin" pane split "$bottomshell" --direction down --ratio 0.45 --no-focus --cwd "$HOME" \
     | jq -er '.result.pane.pane_id') || return
 
   "$herdr_bin" pane run "$root" 'cmatrix -C blue'
   "$herdr_bin" pane run "$bottom" 'exec opencode2'
   "$herdr_bin" pane run "$rightcol" 'tty-clock'
-  "$herdr_bin" pane run "$rest" 'cava'
+  "$herdr_bin" pane run "$rest" 'exec busq --icons on -i'
+  "$herdr_bin" pane run "$bottomshell" 'exec mbtop'
+  "$herdr_bin" pane run "$cava_pane" 'exec cava'
 
-  print "home: layout built (cmatrix, oc, tty-clock, cv) in $HERDR_TAB_ID"
+  print "home: layout built (cmatrix, oc, tty-clock, busq, mbtop, cava) in $HERDR_TAB_ID"
 }
 
 # fzf init (no process substitution)
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
 
+# Find a file with fzf, preview it with bat, and open it in druk.
 vf() {
   local file query
 
@@ -235,49 +179,6 @@ vf() {
 
   file="$(fd --type f --hidden --follow -E .git . | fzf --height=60% --layout=reverse --scheme=path --query "$query" --preview 'bat --style=numbers --color=always --line-range=:200 -- {}' --preview-window='right,60%,border-left')" || return
   druk -- "$file"
-}
-
-pj() {
-  local dir repo_root query
-  local -a roots existing_roots zoxide_dirs repo_dirs candidates
-  typeset -A seen
-
-  roots=(
-    "$HOME/Desktop"
-    "$HOME/Documents"
-    "$HOME/go"
-    "$HOME/Superapp-Projects"
-    "$HOME/dotfiles"
-  )
-
-  for root in "${roots[@]}"; do
-    [[ -d "$root" ]] && existing_roots+=("$root")
-  done
-
-  (( ${#existing_roots[@]} )) || return 1
-
-  query="$*"
-
-  zoxide_dirs=("${(@f)$(zoxide query -l --all 2>/dev/null)}")
-  repo_dirs=("${(@f)$(fd --hidden --no-ignore --type d --glob '.git' "${existing_roots[@]}" -E node_modules -E .next -E dist -E build -x dirname)}")
-
-  for dir in "${zoxide_dirs[@]}"; do
-    repo_root="$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)" || continue
-    [[ -n "${seen[$repo_root]}" ]] && continue
-    seen[$repo_root]=1
-    candidates+=("$repo_root")
-  done
-
-  for dir in "${repo_dirs[@]}"; do
-    [[ -n "${seen[$dir]}" ]] && continue
-    seen[$dir]=1
-    candidates+=("$dir")
-  done
-
-  (( ${#candidates[@]} )) || return 1
-
-  dir="$(printf '%s\n' "${candidates[@]}" | fzf --height=60% --layout=reverse --scheme=path --query "$query" --preview 'if git -C {} rev-parse --show-toplevel >/dev/null 2>&1; then git -C {} status --short --branch; printf "\n"; fi; eza --all --group-directories-first --color=always -- {}' --preview-window='right,60%,border-left')" || return
-  builtin cd -- "$dir"
 }
 
 # starship / zoxide / cargo
@@ -298,3 +199,22 @@ export PATH="$HOME/.druk/bin:$PATH"
 # Go
 export GOPATH="$HOME/.go"
 export PATH="$GOPATH/bin:$PATH"
+{{- else if eq .chezmoi.os "linux" }}
+# Linux development shell.
+case ":$PATH:" in
+  *":$HOME/.druk/bin:"*) ;;
+  *) export PATH="$HOME/.druk/bin:$PATH" ;;
+esac
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+case ":$PATH:" in
+  *":$HOME/.opencode/bin:"*) ;;
+  *) export PATH="$HOME/.opencode/bin:$PATH" ;;
+esac
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
+{{- end }}

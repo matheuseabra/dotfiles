@@ -17,17 +17,17 @@ logs/
 **/node_modules/
 **/automatic_backups/
 **/*.log
-zsh/.zshrc.bak.*
-herdr/.config/herdr/plugins/
-herdr/.config/herdr/plugins.json
-herdr/.config/herdr/.plugins.lock
-herdr/.config/herdr/release-notes.json
-herdr/.config/herdr/session.json
-herdr/.config/herdr/*.sock
+dot_zshrc.tmpl.bak.*
+dot_config/herdr/plugins/
+dot_config/herdr/plugins.json
+dot_config/herdr/.plugins.lock
+dot_config/herdr/release-notes.json
+dot_config/herdr/session.json
+dot_config/herdr/*.sock
 
 # opencode integration files installed and overwritten by tools
-opencode/.config/opencode/hooks/
-opencode/.config/opencode/plugins/
-opencode/.config/opencode/herdr-tui-session.js
-opencode/.config/opencode/bun.lock
+dot_config/opencode/hooks/
+dot_config/opencode/plugins/
+dot_config/opencode/herdr-tui-session.js
+dot_config/opencode/bun.lock
 .commandcode
