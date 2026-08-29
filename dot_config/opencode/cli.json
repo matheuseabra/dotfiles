@@ -1,6 +1,6 @@
 {
   "theme": {
-    "name": "system",
+    "name": "monochrome",
     "mode": "dark"
   },
   "animations": true,
@@ -15,7 +15,8 @@
     "enabled": false
   },
   "diffs": {
-    "view": "auto"
+    "view": "auto",
+    "single": true
   },
   "prompt": {
     "image_preview": true

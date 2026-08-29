@@ -2,23 +2,25 @@
 
 User-level configuration for macOS and Linux, managed with [chezmoi](https://www.chezmoi.io/). Machine packages, users, SSH, services, and binaries belong in [`vps-environment`](https://github.com/matheuseabra/vps-environment).
 
-chezmoi renders this source state into `$HOME`. It selects macOS-only files automatically and renders platform-specific Zsh, Git, and OpenCode configuration.
+The source repository lives at `~/dotfiles`. Chezmoi renders this source state into `$HOME`. It selects macOS-only files automatically and renders platform-specific Zsh, Git, and OpenCode configuration.
 
 ## Install on macOS
 
 ```sh
 brew install chezmoi
-git clone https://github.com/matheuseabra/dotfiles.git ~/.local/share/chezmoi
-chezmoi apply --force
+chezmoi init --source="$HOME/dotfiles" --apply https://github.com/matheuseabra/dotfiles.git
 ```
 
 `--force` replaces the legacy GNU Stow symlinks during this one-time migration. Commit or back up local edits first.
 
-For a new machine, the equivalent bootstrap command is:
+If `~/dotfiles` is already cloned, initialize Chezmoi from that directory and apply it:
 
 ```sh
-chezmoi init --apply https://github.com/matheuseabra/dotfiles.git
+chezmoi init --source="$HOME/dotfiles"
+chezmoi apply --force
 ```
+
+The `.chezmoi.toml.tmpl` source file generates the local Chezmoi configuration with `~/dotfiles` as its source directory.
 
 ## Use
 

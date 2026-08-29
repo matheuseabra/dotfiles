@@ -1,6 +1,3 @@
 {
-  "plugin": [
-    "./herdr-tui-session.js"
-  ],
-  "theme": "venice-from-above"
+  "theme": "monochrome"
 }
