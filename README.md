@@ -42,7 +42,7 @@ Edit source files directly in `~/dotfiles`, then use Druk's Git review before co
 git config core.hooksPath .githooks
 ```
 
-The hook refuses unstaged or untracked repository files and runs `chezmoi apply --no-tty`. It never uses `--force`; a target conflict cancels the commit instead of overwriting local changes.
+The hook refuses unstaged or untracked repository files and runs a noninteractive `chezmoi apply` against this repository with `--error-on-conflict`. It never uses `--force`; a target conflict cancels the commit instead of overwriting local changes.
 
 ## Platform ownership
 
