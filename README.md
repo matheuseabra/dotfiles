@@ -11,13 +11,14 @@ brew install chezmoi
 chezmoi init --source="$HOME/dotfiles" --apply https://github.com/matheuseabra/dotfiles.git
 ```
 
-`--force` replaces the legacy GNU Stow symlinks during this one-time migration. Commit or back up local edits first.
+For a one-time migration from GNU Stow, review `chezmoi diff`, then use `chezmoi apply --force` only after committing or backing up local edits. This replaces the legacy symlinks.
 
-If `~/dotfiles` is already cloned, initialize Chezmoi from that directory and apply it:
+If `~/dotfiles` is already cloned, initialize Chezmoi from that directory, review the rendered changes, and apply it:
 
 ```sh
 chezmoi init --source="$HOME/dotfiles"
-chezmoi apply --force
+chezmoi diff
+chezmoi apply
 ```
 
 The `.chezmoi.toml.tmpl` source file generates the local Chezmoi configuration with `~/dotfiles` as its source directory.
