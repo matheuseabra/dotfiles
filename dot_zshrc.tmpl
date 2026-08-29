@@ -17,11 +17,11 @@ alias d='druk'
 pi() {
   case "${1:-}" in
     update|install|remove|uninstall)
-      command pi "$@"
+      FFF_ENABLE_HOME_SCAN=0 command pi --fff-enable-home-scan=false "$@"
       ;;
     *)
       local cache_dir="${PI_NODE_COMPILE_CACHE:-$HOME/.cache/pi/node-compile}"
-      NODE_COMPILE_CACHE="$cache_dir" command pi --offline "$@"
+      FFF_ENABLE_HOME_SCAN=0 NODE_COMPILE_CACHE="$cache_dir" command pi --offline --fff-enable-home-scan=false "$@"
       ;;
   esac
 }
@@ -199,6 +199,12 @@ export PATH="$HOME/.druk/bin:$PATH"
 # Go
 export GOPATH="$HOME/.go"
 export PATH="$GOPATH/bin:$PATH"
+
+# Avoid indexing the home directory with fff.
+export FFF_ENABLE_HOME_SCAN=0
+
+# Git worktree aliases
+source "{{ .chezmoi.homeDir }}/.worktree-aliases/worktree.sh"
 {{- else if eq .chezmoi.os "linux" }}
 # Linux development shell.
 case ":$PATH:" in

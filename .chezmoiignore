@@ -2,6 +2,7 @@
 README.md
 docs
 .gitignore
+.githooks
 
 {{- if ne .chezmoi.os "darwin" }}
 # Desktop applications and macOS automation.

@@ -161,3 +161,9 @@ switch_ascii_input_source_in_prefix = false
 # (herdr src/ui/panes.rs). overlay0 is a derived muted tint of bg toward fg.
 #
 # and under [ui]:  accent = "#ffffff"
+
+[[keys.command]]
+key = "prefix+shift+s"
+type = "plugin_action"
+command = "herdr-ssh-manager.open-picker"
+description = "SSH connections"

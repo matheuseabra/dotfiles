@@ -34,6 +34,16 @@ chezmoi update           # pull the source repository and apply it
 
 Run `chezmoi add <path>` to import an intentional local change. Do not edit a generated file without adding it back to the source state.
 
+## Commit workflow
+
+Edit source files directly in `~/dotfiles`, then use Druk's Git review before committing. Enable the tracked hook once:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+The hook refuses unstaged or untracked repository files and runs `chezmoi apply --no-tty`. It never uses `--force`; a target conflict cancels the commit instead of overwriting local changes.
+
 ## Platform ownership
 
 All platforms receive:

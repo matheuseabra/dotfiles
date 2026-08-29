@@ -7,7 +7,7 @@
   "session": {
     "scrollbar": false,
     "markdown": "rendered",
-    "sidebar": "auto",
+    "sidebar": "hide",
     "grouping": "auto"
   },
   "tabs": {

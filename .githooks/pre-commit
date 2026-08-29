@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+if ! git diff --quiet --; then
+  printf '%s\n' 'pre-commit: unstaged changes exist; stage or stash them first.' >&2
+  exit 1
+fi
+
+untracked=$(git ls-files --others --exclude-standard)
+if [ -n "$untracked" ]; then
+  printf '%s\n' 'pre-commit: untracked files exist; stage or remove them first.' >&2
+  printf '%s\n' "$untracked" >&2
+  exit 1
+fi
+
+if ! command -v chezmoi >/dev/null 2>&1; then
+  printf '%s\n' 'pre-commit: chezmoi is not available on PATH.' >&2
+  exit 1
+fi
+
+if ! chezmoi apply --no-tty; then
+  printf '%s\n' 'pre-commit: chezmoi apply failed; commit cancelled.' >&2
+  exit 1
+fi

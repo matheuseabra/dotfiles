@@ -5,6 +5,7 @@ keybind = alt+arrow_up=text:\x1b[1;3A
 keybind = alt+arrow_down=text:\x1b[1;3B
 
 shell-integration = detect
+shell-integration-features = ssh-env,ssh-terminfo
 command = /Users/matheusseabra/.local/bin/herdr
 
 # SpaceX Terrafab palette (themes/spacex-terrafab). Keep colors in the theme
