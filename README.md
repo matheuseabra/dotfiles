@@ -1,71 +1,52 @@
 # dotfiles
 
-User-level configuration for macOS and Linux, managed with [chezmoi](https://www.chezmoi.io/). Machine packages, users, SSH, services, and binaries belong in [`vps-environment`](https://github.com/matheuseabra/vps-environment).
+Personal macOS and Linux configuration managed with [Chezmoi](https://www.chezmoi.io/).
 
-The source repository lives at `~/dotfiles`. Chezmoi renders this source state into `$HOME`. It selects macOS-only files automatically and renders platform-specific Zsh, Git, and OpenCode configuration.
+Chezmoi keeps the source files in `~/dotfiles` and applies them to your home directory.
 
-## Install on macOS
+## Get started
 
-```sh
-brew install chezmoi
-chezmoi init --source="$HOME/dotfiles" --apply https://github.com/matheuseabra/dotfiles.git
-```
-
-For a one-time migration from GNU Stow, review `chezmoi diff`, then use `chezmoi apply --force` only after committing or backing up local edits. This replaces the legacy symlinks.
-
-If `~/dotfiles` is already cloned, initialize Chezmoi from that directory, review the rendered changes, and apply it:
+Install Chezmoi with your package manager, then run:
 
 ```sh
+git clone https://github.com/matheuseabra/dotfiles.git ~/dotfiles
 chezmoi init --source="$HOME/dotfiles"
 chezmoi diff
 chezmoi apply
 ```
 
-The `.chezmoi.toml.tmpl` source file generates the local Chezmoi configuration with `~/dotfiles` as its source directory.
+## Everyday use
 
-## Use
+Edit files in `~/dotfiles`, not the generated files under `$HOME`:
 
 ```sh
-chezmoi diff             # preview rendered changes
-chezmoi apply            # apply source state
-chezmoi edit ~/.zshrc    # edit a source file
-chezmoi update           # pull the source repository and apply it
+chezmoi diff
+chezmoi apply
+chezmoi source-path ~/.zshrc
+chezmoi update
 ```
 
-Run `chezmoi add <path>` to import an intentional local change. Do not edit a generated file without adding it back to the source state.
+Chezmoi prefixes such as `dot_`, `private_`, and `executable_` control target names and permissions. Templates (`.tmpl`) are rendered before they are applied.
 
-## Commit workflow
+## Commits
 
-Edit source files directly in `~/dotfiles`, then use Druk's Git review before committing. Enable the tracked hook once:
+Enable the safety hook once:
 
 ```sh
 git config core.hooksPath .githooks
 ```
 
-The hook refuses unstaged or untracked repository files and runs a noninteractive `chezmoi apply` against this repository with `--error-on-conflict`. It never uses `--force`; a target conflict cancels the commit instead of overwriting local changes.
-
-## Platform ownership
-
-All platforms receive:
-
-- Zsh, Git, Starship, btop, Druk, Yazi, and OpenCode configuration.
-- Shared terminal-theme assets where they are used.
-
-macOS also receives Ghostty, Karabiner, skhd, Herdr, Cava, Fastfetch, GitHub CLI, the theme switcher, and wallpapers. The OpenCode configuration enables the local Xcode and grep.app MCP servers only on macOS.
-
-The Linux VPS receives the portable configuration through Ansible after Ansible installs its packages and binaries. It does not receive macOS desktop configuration.
+It checks the working tree and applies Chezmoi before each commit. A target conflict stops the commit instead of overwriting local changes.
 
 ## Themes
 
-On macOS, switch each supported tool to one palette:
+On macOS, preview or switch supported themes with:
 
 ```sh
-change_theme <theme>
 change_theme <theme> --dry-run
+change_theme <theme>
 ```
-
-Theme assets are installed into their application configuration directories. Wallpapers are installed in `~/.local/share/wallpapers`. `change_theme` persists each changed configuration file into the chezmoi source state; commit those source changes before running `chezmoi update`.
 
 ## Secrets
 
-Do not commit credentials, tokens, private keys, or local environment files. OpenCode reads `FIRECRAWL_API_KEY` from the environment. Add encrypted chezmoi files or a password-manager integration only when a configuration file must contain a secret.
+Keep credentials, private keys, and local environment files out of Git. Use Chezmoi encryption or a password manager when a managed file needs a secret.
