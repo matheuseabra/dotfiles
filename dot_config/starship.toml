@@ -5,6 +5,7 @@ format = """
 [░▒▓](accent)\
 $username\  
 $directory\
+$git_branch\
 [ ](fg:cyan)\
 $character"""
 

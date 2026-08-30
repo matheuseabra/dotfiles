@@ -1,5 +1,7 @@
 # Repository documentation and metadata are not home-directory files.
 README.md
+AGENTS.md
+.agents
 docs
 .gitignore
 .githooks
