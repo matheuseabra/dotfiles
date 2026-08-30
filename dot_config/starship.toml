@@ -6,7 +6,7 @@ format = """
 $username\  
 $directory\
 $git_branch\
-[ ](fg:cyan)\
+${custom.no_git_branch_tip}\
 $character"""
 
 [username]
@@ -31,11 +31,16 @@ truncation_symbol = "…/"
 [git_branch]
 symbol = ""
 style = "bg:element"
-format = '[[ $symbol $branch ](fg:cyan bg:element)]($style)'
+format = '[[ $symbol $branch ](fg:cyan bg:element)]($style)[ ](fg:element)'
 
 [git_status]
 style = "bg:element"
 format = '[[($all_status$ahead_behind )](fg:cyan bg:element)]($style)'
+
+[custom.no_git_branch_tip]
+command = "printf ' '"
+when = ''' test -z "$(git branch --show-current 2>/dev/null)" '''
+format = '[$output](fg:cyan)'
 
 [nodejs]
 symbol = ""
