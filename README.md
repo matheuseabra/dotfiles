@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal macOS and Linux configuration managed with [Chezmoi](https://www.chezmoi.io/).
+Personal macOS and Linux configuration files managed with [Chezmoi](https://www.chezmoi.io/).
 
 Chezmoi keeps the source files in `~/dotfiles` and applies them to your home directory.
 
