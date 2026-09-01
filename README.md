@@ -2,11 +2,9 @@
 
 Personal macOS and Linux configuration files managed with [Chezmoi](https://www.chezmoi.io/).
 
-Chezmoi keeps the source files in `~/dotfiles` and applies them to your home directory.
-
 ## Get started
 
-Install Chezmoi with your package manager, then run:
+Install Chezmoi with a package manager, then run:
 
 ```sh
 git clone https://github.com/matheuseabra/dotfiles.git ~/dotfiles
