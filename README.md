@@ -1,6 +1,6 @@
 # dotfiles
 
-Personal macOS and Linux configuration files managed with [Chezmoi](https://www.chezmoi.io/).
+My macOS and Linux shell and application configuration files, managed with [Chezmoi](https://www.chezmoi.io/).
 
 ## Get started
 
