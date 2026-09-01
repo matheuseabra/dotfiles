@@ -9,9 +9,9 @@ if ! git diff --quiet --; then
   exit 1
 fi
 
-untracked=$(git ls-files --others --ignored --exclude-standard)
+untracked=$(git ls-files --others --exclude-standard)
 if [ -n "$untracked" ]; then
-  printf '%s\n' 'pre-commit: untracked files exist; stage or remove them first.' >&2
+  printf '%s\n' 'pre-commit: untracked non-ignored files exist; stage or remove them first.' >&2
   printf '%s\n' "$untracked" >&2
   exit 1
 fi

@@ -14,6 +14,7 @@ logs/
 
 # Generated application state and local tooling
 .pi/
+/.agents/
 **/node_modules/
 **/automatic_backups/
 **/*.log
@@ -25,9 +26,7 @@ dot_config/herdr/release-notes.json
 dot_config/herdr/session.json
 dot_config/herdr/*.sock
 
-# opencode integration files installed and overwritten by tools
-dot_config/opencode/hooks/
-dot_config/opencode/plugins/
-dot_config/opencode/herdr-tui-session.js
-dot_config/opencode/bun.lock
+# Local coding-agent configuration
+/dot_config/opencode/
+
 .commandcode

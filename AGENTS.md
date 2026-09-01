@@ -8,9 +8,9 @@ This repository is the Chezmoi source state for the user's macOS and Linux confi
 - Destination directory: `$HOME`
 - Chezmoi config: `$HOME/.config/chezmoi/chezmoi.toml`
 - Configured source: `$HOME/dotfiles`
-- Project skill: `.agents/skills/dotfiles/SKILL.md`
+- Optional local project skill: `.agents/skills/dotfiles/SKILL.md`
 
-Read this file and the project skill before changing source state. Files such as `~/.zshrc` and `~/.config/*` are generated targets; `$HOME/dotfiles` is the normal editing surface.
+Read this file and the project skill, when present, before changing source state. Files such as `~/.zshrc` and `~/.config/*` are generated targets; `$HOME/dotfiles` is the normal editing surface.
 
 ## Source Rules
 
@@ -43,7 +43,7 @@ Git uses the tracked hook in `.githooks/pre-commit`. Enable it once per clone:
 git config core.hooksPath .githooks
 ```
 
-The hook refuses unstaged and untracked files, including ignored files. It runs:
+The hook refuses unstaged and untracked non-ignored files. It runs:
 
 ```sh
 chezmoi apply --source="$repo_root" --no-tty --error-on-conflict
