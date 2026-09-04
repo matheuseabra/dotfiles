@@ -206,6 +206,9 @@ export FFF_ENABLE_HOME_SCAN=0
 # Git worktree aliases
 source "{{ .chezmoi.homeDir }}/.worktree-aliases/worktree.sh"
 export PATH="{{ .chezmoi.homeDir }}/.relic/bin:$PATH"
+
+# Added by cua-driver-rs installer — see https://github.com/trycua/cua
+export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
 {{- else if eq .chezmoi.os "linux" }}
 # Linux development shell.
 case ":$PATH:" in

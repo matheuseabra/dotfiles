@@ -12,7 +12,7 @@
   "wrap": false,
   "scrollPastEnd": false,
   "tabSize": 2,
-  "sidebarWidth": 38,
+  "sidebarWidth": 24,
   "sidebarPosition": "right",
   "skipUpdate": "",
   "trimOnSave": false,
@@ -37,6 +37,7 @@
   "typescriptTsdk": "",
   "lspServers": {},
   "keybindings": {
+    "editor.lineStart": "Ctrl+Opt+H",
     "view.sidebar": "Ctrl+Opt+B"
   },
   "disabledExtensions": [],
